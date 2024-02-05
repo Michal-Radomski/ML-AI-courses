@@ -1,3 +1,5 @@
 # ML & AI courses
 
-Udemy.com Machine Learning &amp; Artificial Intelligence courses
+Files created during Udemy.com Machine Learning &amp; Artificial Intelligence courses:
+
+1. [ChatGPT, Midjourney, DALL-E 3 & APIs](https://www.udemy.com/course/chatgpt-bard-bing-complete-guide-to-chatgpt-openai-apis)
