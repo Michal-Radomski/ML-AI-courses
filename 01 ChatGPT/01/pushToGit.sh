@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # run command: ./pushToGit.sh "name of the commit"
+# author: GPT-3.5 ;)
 
 pushToGit() {
   commit_name="$1"
