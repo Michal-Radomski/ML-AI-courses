@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# run command: ./pushToGit.sh "name of the commit"
-# author: GPT-3.5 ;)
+# Run command: ./gitPush.sh "name of the commit"
+# Author: GPT-3.5 ;)
 
-pushToGit() {
+gitPush() {
   commit_name="$1"
 
   # Check if commit name is provided
@@ -18,6 +18,10 @@ pushToGit() {
   git push
   git status
 
+  # Wait for 5 seconds and clear the console
+  sleep 5
+  clear
+
   echo "Git commands executed successfully."
 }
 
@@ -28,4 +32,4 @@ if [ "$#" -ne 1 ]; then
 fi
 
 # Call the function with the provided argument
-pushToGit "$1"
+gitPush "$1"
