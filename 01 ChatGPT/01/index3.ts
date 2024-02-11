@@ -1,4 +1,4 @@
-//! Not checked!: node, express, TS: login with GraphQL
+//! Not checked!: node, express, TS: login with GraphQL, author: GPT-3.5 ;)
 
 //* npm install express-graphql graphql @types/graphql
 

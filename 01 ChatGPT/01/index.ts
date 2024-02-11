@@ -1,4 +1,4 @@
-//! Not checked!: node, express, TS: auth OOP approach
+//! Not checked!: node, express, TS: auth OOP approach, author: GPT-3.5 ;)
 
 //* npm install express bcrypt body-parser pg pg-pool jsonwebtoken @types/node @types/express @types/bcrypt
 

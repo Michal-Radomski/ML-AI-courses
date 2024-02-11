@@ -1,4 +1,4 @@
-//! Not checked!: node, express, TS: auth functional approach
+//! Not checked!: node, express, TS: auth functional approach, author: GPT-3.5 ;)
 
 //* Secret Key
 const crypto = require("crypto");
