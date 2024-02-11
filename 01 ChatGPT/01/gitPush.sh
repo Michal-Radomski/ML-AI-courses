@@ -8,7 +8,7 @@ gitPush() {
 
   # Check if commit name is provided
   if [ -z "$commit_name" ]; then
-    echo "Error: Please provide a commit name."
+    echo -e "\e[31mError: Please provide a commit name.\e[0m"
     exit 1
   fi
 
@@ -22,12 +22,12 @@ gitPush() {
   sleep 5
   clear
 
-  echo "Git commands executed successfully."
+  echo -e "\e[32mGit commands executed successfully.\e[0m"
 }
 
 # Check if argument is provided
 if [ "$#" -ne 1 ]; then
-  echo "Usage: $0 \"commit_name\""
+  echo -e "\e[31mUsage: $0 \"commit_name\"\e[0m"
   exit 1
 fi
 
