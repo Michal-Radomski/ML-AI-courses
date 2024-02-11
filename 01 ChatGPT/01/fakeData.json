@@ -1,0 +1,112 @@
+[
+  {
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": "john.doe@example.com",
+    "password": "strongpassword123",
+    "age": 25,
+    "sex": "m",
+    "country": "United States",
+    "city": "New York"
+  },
+  {
+    "firstName": "Jane",
+    "lastName": "Smith",
+    "email": "jane.smith@example.com",
+    "password": "securepass456",
+    "age": 30,
+    "sex": "f",
+    "country": "Canada",
+    "city": "Toronto"
+  },
+  {
+    "firstName": "Bob",
+    "lastName": "Johnson",
+    "email": "bob.johnson@example.com",
+    "password": "safeandstrong789",
+    "age": 22,
+    "sex": "m",
+    "country": "United Kingdom",
+    "city": "London"
+  },
+  {
+    "firstName": "Alice",
+    "lastName": "Williams",
+    "email": "alice.williams@example.com",
+    "password": "password1234",
+    "age": 28,
+    "sex": "f",
+    "country": "Australia",
+    "city": "Sydney"
+  },
+  {
+    "firstName": "Michael",
+    "lastName": "Davis",
+    "email": "michael.davis@example.com",
+    "password": "pass123word",
+    "age": 32,
+    "sex": "m",
+    "country": "Germany",
+    "city": "Berlin"
+  },
+  {
+    "firstName": "Emily",
+    "lastName": "Moore",
+    "email": "emily.moore@example.com",
+    "password": "securepassword567",
+    "age": 26,
+    "sex": "f",
+    "country": "France",
+    "city": "Paris"
+  },
+  {
+    "firstName": "Alex",
+    "lastName": "Brown",
+    "email": "alex.brown@example.com",
+    "password": "brown1234",
+    "age": 29,
+    "sex": "m",
+    "country": "Brazil",
+    "city": "Rio de Janeiro"
+  },
+  {
+    "firstName": "Sophia",
+    "lastName": "Jones",
+    "email": "sophia.jones@example.com",
+    "password": "password987",
+    "age": 24,
+    "sex": "f",
+    "country": "Spain",
+    "city": "Barcelona"
+  },
+  {
+    "firstName": "Daniel",
+    "lastName": "Clark",
+    "email": "daniel.clark@example.com",
+    "password": "clark4567",
+    "age": 31,
+    "sex": "m",
+    "country": "India",
+    "city": "Mumbai"
+  },
+  {
+    "firstName": "Olivia",
+    "lastName": "White",
+    "email": "olivia.white@example.com",
+    "password": "whitepass789",
+    "age": 27,
+    "sex": "f",
+    "country": "South Africa",
+    "city": "Cape Town"
+  },
+  {
+    "firstName": "Liam",
+    "lastName": "Miller",
+    "email": "liam.miller@example.com",
+    "password": "millerpass123",
+    "age": 33,
+    "sex": "m",
+    "country": "Japan",
+    "city": "Tokyo"
+  }
+]
