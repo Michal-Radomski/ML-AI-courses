@@ -18,14 +18,14 @@ isDestinationReachable() {
 # Function to mount a source to a destination
 mountSourceToDestination() {
   echo "Mounting $1 to $2"
-  # Add your mount command here
+  #* Add your mount command here
   # Example: mount -t cifs -o username=user,password=pass "//${1}" "${2}"
 }
 
 # Function to unmount a destination
 unmountDestination() {
   echo "Unmounting $1"
-  # Add your unmount command here
+  #* Add your unmount command here
   # Example: umount "${1}"
 }
 
