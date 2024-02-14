@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Run command: ./gitPush.sh "name of the commit" (bash "commit  name")
+# Run command: ./git_push.sh "name of the commit" (bash git_push.sh "commit name")
 # Author: GPT-3.5 ;)
 
 git_push() {

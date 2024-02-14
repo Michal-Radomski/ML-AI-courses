@@ -2,7 +2,7 @@
 
 # Author: GPT-3.5 ;)
 
-genPass() {
+gen_pass() {
   if [ "$#" -ne 1 ]; then
     echo "Usage: $0 <password_length>"
     exit 1
@@ -48,4 +48,4 @@ if [ "$#" -ne 1 ]; then
 fi
 
 # Call the function with the provided argument
-genPass "$1"
+gen_pass "$1"
