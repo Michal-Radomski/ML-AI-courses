@@ -3,7 +3,7 @@
 # Run command: ./gitPush.sh "name of the commit" (bash "commit  name")
 # Author: GPT-3.5 ;)
 
-gitPush() {
+git_push() {
   commit_name="$1"
 
   # Check if commit name is provided
@@ -32,4 +32,4 @@ if [ "$#" -ne 1 ]; then
 fi
 
 # Call the function with the provided argument
-gitPush "$1"
+git_push "$1"
