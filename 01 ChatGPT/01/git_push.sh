@@ -10,7 +10,6 @@ git_push() {
   if [ -z "$commit_name" ]; then
     # echo -e "\e[31mError: Please provide a commit name.\e[0m"
     echo -e "\e[1;31mError: Please provide a commit name.\e[0m" #* Bold added
-
     exit 1
   fi
 
@@ -18,7 +17,8 @@ git_push() {
   git add -A
   git commit -m "$commit_name"
   git push
-  git status
+  # git status
+  local var_git_status=$(git status | grep clean)
 
   # Wait for 5 seconds and clear the console
   sleep 5
@@ -26,6 +26,7 @@ git_push() {
 
   # echo -e "\e[32mGit commands executed successfully.\e[0m"
   echo -e "\e[1;32mGit commands executed successfully.\e[0m" #* Bold added
+  echo -e "\e[1;44mGit status: $var_git_status\e[0m"
 }
 
 # Check if argument is provided
