@@ -66,25 +66,24 @@ const points = [200, 150, 650, 430];
 const min = _.min(points) as number;
 const max = _.max(points) as number;
 
-const normalized = _.map(points, (point) => {
+const normalized: number[] = _.map(points, (point) => {
   return (point - min) / (max - min);
 });
 console.log("normalized:", normalized);
 
-function minMax(data: number[][], featureCount: number) {
+function minMax(data: number[][], featureCount: number): number[][] {
   const clonedData = _.cloneDeep(data);
 
   for (let i = 0; i < featureCount; i++) {
     const column = clonedData.map((row) => row[i]);
 
-    const min = _.min(column);
-    const max = _.max(column);
+    const min = _.min(column) as number;
+    const max = _.max(column) as number;
 
     for (let j = 0; j < clonedData.length; j++) {
-      clonedData[j][i] = (clonedData[j][i] - min!) / (max! - min!);
+      clonedData[j][i] = (clonedData[j][i] - min) / (max - min);
     }
   }
-
   return clonedData;
 }
 
@@ -93,5 +92,5 @@ const data = [
   [25, 3],
   [10, 5],
 ];
-
 console.log("minMax(data, 1):", minMax(data, 1));
+console.log("minMax(data, 2):", minMax(data, 2));
