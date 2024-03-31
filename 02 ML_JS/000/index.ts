@@ -22,6 +22,7 @@ import _ from "lodash";
 
 //* KNN Algorithm
 const outputs = [
+  // position, bounciness, ball size, bucket
   [10, 0.5, 16, 1],
   [200, 0.5, 16, 4],
   [350, 0.5, 16, 4],
@@ -35,9 +36,15 @@ function distance(point: number): number {
   return Math.abs(point - predictionPoint);
 }
 
-const calculatedRes = _.chain(outputs)
+const calculatedRes: number = _.chain(outputs)
   .map((row) => [distance(row[0]), row[3]])
   .sortBy((row) => row[0])
   .slice(0, k)
+  .countBy((row) => row[1])
+  .toPairs()
+  .sortBy((row) => row[1])
+  .last()
+  .first()
+  .parseInt()
   .value();
-console.log("calculatedRes:", calculatedRes);
+console.log("calculatedRes:", calculatedRes); // Bucket no 4
