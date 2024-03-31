@@ -60,3 +60,13 @@ const dist =
     .sum()
     .value() ** 0.5;
 console.log("dist:", dist);
+
+//* Normalization
+const points = [200, 150, 650, 430];
+const min = _.min(points) as number;
+const max = _.max(points) as number;
+
+const normalized = _.map(points, (point) => {
+  return (point - min) / (max - min);
+});
+console.log("normalized:", normalized);
