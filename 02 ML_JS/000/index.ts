@@ -48,3 +48,15 @@ const calculatedRes: number = _.chain(outputs)
   .parseInt()
   .value();
 console.log("calculatedRes:", calculatedRes); // Bucket no 4
+
+//* N-Dimension Distance
+const pointA = [1, 1, 1];
+const pointB = [5, 5, 5];
+
+const dist =
+  _.chain(pointA)
+    .zip(pointB)
+    .map(([a, b]: [a: number, b: number]) => (a - b) ** 2)
+    .sum()
+    .value() ** 0.5;
+console.log("dist:", dist);
