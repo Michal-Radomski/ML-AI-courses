@@ -70,3 +70,28 @@ const normalized = _.map(points, (point) => {
   return (point - min) / (max - min);
 });
 console.log("normalized:", normalized);
+
+function minMax(data: number[][], featureCount: number) {
+  const clonedData = _.cloneDeep(data);
+
+  for (let i = 0; i < featureCount; i++) {
+    const column = clonedData.map((row) => row[i]);
+
+    const min = _.min(column);
+    const max = _.max(column);
+
+    for (let j = 0; j < clonedData.length; j++) {
+      clonedData[j][i] = (clonedData[j][i] - min!) / (max! - min!);
+    }
+  }
+
+  return clonedData;
+}
+
+const data = [
+  [50, 1],
+  [25, 3],
+  [10, 5],
+];
+
+console.log("minMax(data, 1):", minMax(data, 1));
