@@ -1,5 +1,6 @@
 import _ from "lodash";
 
+//* Lodash intro
 // const numbersArray = [
 //   [10, 5],
 //   [17, 2],
@@ -28,6 +29,7 @@ const outputs = [
 ];
 
 const predictionPoint = 300;
+const k = 3;
 
 function distance(point: number): number {
   return Math.abs(point - predictionPoint);
@@ -36,6 +38,6 @@ function distance(point: number): number {
 const calculatedRes = _.chain(outputs)
   .map((row) => [distance(row[0]), row[3]])
   .sortBy((row) => row[0])
-  .slice(0, 3)
+  .slice(0, k)
   .value();
 console.log("calculatedRes:", calculatedRes);
