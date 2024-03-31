@@ -9,10 +9,6 @@ function onScoreUpdate(dropPosition, bounciness, size, bucketLabel) {
   // console.log("outputs:", outputs);
 }
 
-function distance(point) {
-  return Math.abs(point - predictionPoint);
-}
-
 function runAnalysis() {
   // Write code here to analyze stuff
   const bucket = _.chain(outputs)
@@ -28,4 +24,17 @@ function runAnalysis() {
     .value();
 
   console.log("bucket:", bucket);
+}
+
+function distance(point) {
+  return Math.abs(point - predictionPoint);
+}
+
+function splitDataset(data, testCount) {
+  const shuffled = _.shuffle(data);
+
+  const testSet = _.slice(shuffled, 0, testCount);
+  const trainingSet = _.slice(shuffled, testCount);
+
+  return [testSet, trainingSet];
 }
