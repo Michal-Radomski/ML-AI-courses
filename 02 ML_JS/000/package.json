@@ -4,12 +4,14 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "start": "nodemon index.ts"
+    "start": "clear && nodemon index.ts",
+    "start2": "clear && nodemon index2.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@tensorflow/tfjs-node": "^4.17.0",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
