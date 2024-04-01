@@ -7,7 +7,11 @@ import * as tf from "@tensorflow/tfjs-node";
 //   return a.value > b.value ? 1 : -1;
 // });
 // console.log(testSorted2); //* [ { value: 5 }, { value: 15 }, { value: 20 }, { value: 30 } ]
+// const testSum = test.reduce((acc, obj) => acc + obj.value, 0);
+// console.log("testSum/test.length:", testSum / test.length);
 
+//* The k-nearest neighbors (KNN) algorithm
+const k = 2;
 const features = tf.tensor([
   [-121, 47],
   [-121.2, 46.5],
@@ -20,12 +24,15 @@ const labels = tf.tensor([[200], [250], [215], [240]]);
 const predictionPoint = tf.tensor([[-121, 47]]);
 
 const distances = features.sub(predictionPoint).pow(2).sum(1).pow(0.5);
-distances.print();
+// distances.print();
 
-const tsData = distances
-  .expandDims(1)
-  .concat(labels, 1)
-  .unstack()
-  .sort((a, b) => (a.arraySync() as number[])[0] - (b.arraySync() as number[])[0]);
+const tsData =
+  distances
+    .expandDims(1)
+    .concat(labels, 1)
+    .unstack()
+    .sort((a, b) => (a.arraySync() as number[])[0] - (b.arraySync() as number[])[0])
+    .slice(0, k)
+    .reduce((acc, pair) => acc + (pair.arraySync() as number[])[1], 0) / k;
 
 console.log("tsData:", tsData);
