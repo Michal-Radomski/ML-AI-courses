@@ -40,14 +40,26 @@ import * as tf from "@tensorflow/tfjs-node";
 // newData.print();
 
 //* Multiplication
-const A = tf.tensor([
+// const A = tf.tensor([
+//   [1, 2, 3],
+//   [4, 5, 6],
+// ]);
+// const B = tf.tensor([
+//   [1, 2],
+//   [3, 1],
+//   [2, 3],
+// ]);
+// const result = tf.matMul(A, B);
+// result.print()
+
+//* Tensor Accessors
+const data1 = tf.tensor([10, 20, 30]);
+const data1array = data1.arraySync() as number[];
+console.log("data1array[0]:", data1array[0]);
+
+const data2 = tf.tensor([
   [1, 2, 3],
   [4, 5, 6],
 ]);
-const B = tf.tensor([
-  [1, 2],
-  [3, 1],
-  [2, 3],
-]);
-const result = tf.matMul(A, B);
-result.print();
+const data2array = data2.arraySync() as number[][];
+console.log("data2array[0][0]:", data2array[0][0]);
