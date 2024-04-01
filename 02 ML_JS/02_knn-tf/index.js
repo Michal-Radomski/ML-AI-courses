@@ -12,4 +12,5 @@ let { features, labels, testFeatures, testLabels } = loadCSV("kc_house_data.csv"
 
 features = tf.tensor(features);
 labels = tf.tensor(labels);
-console.log({ features }, { labels });
+// console.log({ features }, { labels });
+console.log({ testFeatures }, { testLabels });
