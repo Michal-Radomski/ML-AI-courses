@@ -16,7 +16,7 @@ import * as tf from "@tensorflow/tfjs-node";
 
 // const data4 = data.sub(data2);
 // data4.print();
-// const data5 = data.mul(data2);
+// const data5 = data.mul(data2); //* Hadamard Product
 // data5.print();
 // const data6 = data.div(data2);
 // data6.print();
@@ -30,11 +30,24 @@ import * as tf from "@tensorflow/tfjs-node";
 // const otherData = tf.tensor([1]);
 // data.sub(otherData).print();
 
-const data = tf.tensor([
-  [1, 1, 1],
-  [2, 2, 2],
+// const data = tf.tensor([
+//   [1, 1, 1],
+//   [2, 2, 2],
+// ]);
+// const otherData: tf.Tensor<tf.Rank> = tf.tensor([[1, 1, 1]]);
+// const newData = data.add(otherData);
+// console.log("newData:", newData);
+// newData.print();
+
+//* Multiplication
+const A = tf.tensor([
+  [1, 2, 3],
+  [4, 5, 6],
 ]);
-const otherData: tf.Tensor<tf.Rank> = tf.tensor([[1, 1, 1]]);
-const newData = data.add(otherData);
-console.log("newData:", newData);
-newData.print();
+const B = tf.tensor([
+  [1, 2],
+  [3, 1],
+  [2, 3],
+]);
+const result = tf.matMul(A, B);
+result.print();
