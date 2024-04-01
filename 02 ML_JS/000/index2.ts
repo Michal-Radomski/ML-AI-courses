@@ -80,24 +80,47 @@ import * as tf from "@tensorflow/tfjs-node";
 // data2SliceV2.print();
 
 //* Tensor Concatenation
-const A = tf.tensor([
-  [1, 2, 3],
-  [4, 5, 6],
-]);
-const B = tf.tensor([
-  [13, 14, 15],
-  [16, 17, 18],
-]);
-const C = A.concat(B, 0);
-console.log("C.shape:", C.shape); // [4,3]
-// [[1 , 2 , 3 ],
-// [4 , 5 , 6 ],
-// [13, 14, 15],
-// [16, 17, 18]]
+// const A = tf.tensor([
+//   [1, 2, 3],
+//   [4, 5, 6],
+// ]);
+// const B = tf.tensor([
+//   [13, 14, 15],
+//   [16, 17, 18],
+// ]);
+// const C = A.concat(B, 0);
+// console.log("C.shape:", C.shape); // [4,3]
+// // [[1 , 2 , 3 ],
+// // [4 , 5 , 6 ],
+// // [13, 14, 15],
+// // [16, 17, 18]]
 
-C.print();
-const D = A.concat(B, 1);
-console.log("C.shape:", D.shape); // [2,6]
-D.print();
-// [[1, 2, 3, 13, 14, 15],
-// [4, 5, 6, 16, 17, 18]]
+// C.print();
+// const D = A.concat(B, 1);
+// console.log("C.shape:", D.shape); // [2,6]
+// D.print();
+// // [[1, 2, 3, 13, 14, 15],
+// // [4, 5, 6, 16, 17, 18]]
+
+//* Summing Values Along an Axis
+const jumpData = tf.tensor([
+  [70, 70, 70],
+  [70, 70, 70],
+  [70, 70, 70],
+  [70, 70, 70],
+]);
+const playerData = tf.tensor([
+  [1, 160],
+  [2, 160],
+  [3, 160],
+  [4, 160],
+]);
+
+const jumpDataSum = jumpData.sum(1, true).concat(playerData, 1); //* V1
+jumpDataSum.print();
+console.log("jumpDataSum.shape:", jumpDataSum.shape);
+
+//*  Massaging Dimensions with ExpandDims
+const jumpDataSum2 = jumpData.sum(1).expandDims(1).concat(playerData, 1); //* V2
+jumpDataSum2.print();
+console.log("jumpDataSum2.shape:", jumpDataSum2.shape);
