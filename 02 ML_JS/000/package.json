@@ -5,7 +5,8 @@
   "main": "index.ts",
   "scripts": {
     "start": "clear && nodemon index.ts",
-    "start2": "clear && nodemon index2.ts"
+    "start2": "clear && nodemon index2.ts",
+    "start3": "clear && nodemon index3.ts"
   },
   "keywords": [],
   "author": "",
