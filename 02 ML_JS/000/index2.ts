@@ -65,16 +65,39 @@ import * as tf from "@tensorflow/tfjs-node";
 // console.log("data2array[0][0]:", data2array[0][0]);
 
 //* Slices of Data
-const data2 = tf.tensor([
+// const data2 = tf.tensor([
+//   [1, 2, 3],
+//   [4, 5, 6],
+//   [7, 8, 9],
+//   [10, 11, 12],
+//   [13, 14, 15],
+//   [16, 17, 18],
+// ]);
+// const data2Slice = data2.slice([0, 1], [6, 1]); //* Give the same results!
+// const data2SliceV2 = data2.slice([0, 1], [-1, 1]); //* Give the same results!
+// console.log("data2.shape:", data2.shape); // [6,3]
+// data2Slice.print();
+// data2SliceV2.print();
+
+//* Tensor Concatenation
+const A = tf.tensor([
   [1, 2, 3],
   [4, 5, 6],
-  [7, 8, 9],
-  [10, 11, 12],
+]);
+const B = tf.tensor([
   [13, 14, 15],
   [16, 17, 18],
 ]);
-const data2Slice = data2.slice([0, 1], [6, 1]); //* Give the same results!
-const data2SliceV2 = data2.slice([0, 1], [-1, 1]); //* Give the same results!
-console.log("data2.shape:", data2.shape); // [6,3]
-data2Slice.print();
-data2SliceV2.print();
+const C = A.concat(B, 0);
+console.log("C.shape:", C.shape); // [4,3]
+// [[1 , 2 , 3 ],
+// [4 , 5 , 6 ],
+// [13, 14, 15],
+// [16, 17, 18]]
+
+C.print();
+const D = A.concat(B, 1);
+console.log("C.shape:", D.shape); // [2,6]
+D.print();
+// [[1, 2, 3, 13, 14, 15],
+// [4, 5, 6, 16, 17, 18]]
