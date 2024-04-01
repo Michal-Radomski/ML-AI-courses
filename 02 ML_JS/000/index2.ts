@@ -53,13 +53,28 @@ import * as tf from "@tensorflow/tfjs-node";
 // result.print()
 
 //* Tensor Accessors
-const data1 = tf.tensor([10, 20, 30]);
-const data1array = data1.arraySync() as number[];
-console.log("data1array[0]:", data1array[0]);
+// const data1 = tf.tensor([10, 20, 30]);
+// const data1array = data1.arraySync() as number[];
+// console.log("data1array[0]:", data1array[0]);
 
+// const data2 = tf.tensor([
+//   [1, 2, 3],
+//   [4, 5, 6],
+// ]);
+// const data2array = data2.arraySync() as number[][];
+// console.log("data2array[0][0]:", data2array[0][0]);
+
+//* Slices of Data
 const data2 = tf.tensor([
   [1, 2, 3],
   [4, 5, 6],
+  [7, 8, 9],
+  [10, 11, 12],
+  [13, 14, 15],
+  [16, 17, 18],
 ]);
-const data2array = data2.arraySync() as number[][];
-console.log("data2array[0][0]:", data2array[0][0]);
+const data2Slice = data2.slice([0, 1], [6, 1]); //* Give the same results!
+const data2SliceV2 = data2.slice([0, 1], [-1, 1]); //* Give the same results!
+console.log("data2.shape:", data2.shape); // [6,3]
+data2Slice.print();
+data2SliceV2.print();
