@@ -10,8 +10,11 @@ function knn(
   predictionPoint: tf.Tensor<tf.Rank>,
   k: number
 ): number {
-  // const { mean, variance } = tf.moments(features, 0);
-  // const scaledPrediction = predictionPoint.sub(mean).div(variance.pow(0.5));
+  const { mean, variance } = tf.moments(features, 0);
+  const scaledPrediction = predictionPoint.sub(mean).div(variance.pow(0.5));
+  // mean.print();
+  // variance.print();
+  // scaledPrediction.print();
 
   return (
     features

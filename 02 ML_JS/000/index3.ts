@@ -36,3 +36,18 @@ const tsData =
     .reduce((acc, pair) => acc + (pair.arraySync() as number[])[1], 0) / k;
 
 console.log("tsData:", tsData);
+
+//* Standardization
+const numbers = tf.tensor([
+  [1, 2],
+  [3, 4],
+  [5, 6],
+]);
+
+const { mean, variance } = tf.moments(numbers, 0);
+// mean.print();
+// variance.print();
+numbers.sub(mean).div(variance.pow(0.5)).print();
+//    [[-1.2247448, -1.2247448],
+//    [0         , 0         ],
+//    [1.2247448 , 1.2247448 ]]
