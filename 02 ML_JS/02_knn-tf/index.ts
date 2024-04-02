@@ -2,6 +2,8 @@ import * as tf from "@tensorflow/tfjs-node";
 
 const loadCSV = require("./load-csv");
 
+const k = 10;
+
 function knn(
   features: tf.Tensor<tf.Rank>,
   labels: tf.Tensor<tf.Rank>,
@@ -38,5 +40,9 @@ labels = tf.tensor(labels);
 // console.log({ features }, { labels });
 // console.log({ testFeatures }, { testLabels });
 
-const result = knn(features, labels, tf.tensor(testFeatures[0]), 10);
-console.log("result:", result, testLabels[0][0]);
+testFeatures.forEach((testPoint: number[], i: number) => {
+  const result = knn(features, labels, tf.tensor(testPoint), k);
+  const err = (testLabels[i][0] - result) / testLabels[i][0];
+  console.log("result:", result);
+  console.log("Error", `${(err * 100).toFixed(1)}%`);
+});
