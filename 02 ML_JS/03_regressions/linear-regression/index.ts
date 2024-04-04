@@ -10,3 +10,4 @@ let { features, labels, testFeatures, testLabels } = loadCSV("./cars.csv", {
   labelColumns: ["mpg"],
 });
 // console.log({ features, labels, testFeatures, testLabels });
+console.log("LinearRegression:", LinearRegression, typeof LinearRegression);
