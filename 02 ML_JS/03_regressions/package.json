@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "start": "nodemon index.ts"
+    "start": "nodemon linear-regression/index.ts"
   },
   "author": "",
   "license": "ISC",
