@@ -1,4 +1,4 @@
-passedemissions,mpg,cylinders,displacement,horsepower,weight,acceleration,modelyear,carname
+passed_emissions,mpg,cylinders,displacement,horsepower,weight,acceleration,modelyear,carname
 FALSE,18,8,307,130,1.752,12,70,chevrolet chevelle malibu
 FALSE,15,8,350,165,1.8465,11.5,70,buick skylark 320
 FALSE,18,8,318,150,1.718,11,70,plymouth satellite
