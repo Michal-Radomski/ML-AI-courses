@@ -56,3 +56,12 @@ const onesTensor = tf.ones([2, 2], "int32");
 onesTensor.print();
 const zerosTensor = tf.zeros([2, 2], "int32");
 zerosTensor.print();
+
+const tensor1 = tf.tensor([1, 2, 3, 4, 5]);
+tensor1.div(5).print();
+
+const a = tf.tensor([
+  [1, 2, 3, 4],
+  [5, 6, 7, 8],
+]);
+a.transpose().print(); // or tf.transpose(a)

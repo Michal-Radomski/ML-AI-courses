@@ -67,7 +67,7 @@ class LinearRegression {
     this.features = tf.ones([(this.features as unknown as tf.Tensor).shape[0]], "int32").concat(this.features, 1);
 
     this.options = Object.assign({ learningRate: 0.1, iterations: 1000 }, options);
-    this.weights = tf.zeros([2, 1]); //* can be 1
+    this.weights = tf.zeros([2, 1], "int32");
   }
 
   gradientDescent(features: tf.Tensor<tf.Rank>, labels: tf.Tensor<tf.Rank>): void {
