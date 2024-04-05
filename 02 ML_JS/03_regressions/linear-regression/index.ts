@@ -1,5 +1,3 @@
-import * as tf from "@tensorflow/tfjs-node";
-
 const loadCSV = require("../load-csv");
 import LinearRegression from "./linear-regression";
 
@@ -18,8 +16,8 @@ let {
 // console.log("LinearRegression:", LinearRegression, typeof LinearRegression);
 
 const linearRegression = new LinearRegression(features, labels, {
-  learningRate: 0.001,
-  iterations: 1,
+  learningRate: 0.0001,
+  iterations: 100,
 });
 // console.log("linearRegression:", linearRegression);
 
