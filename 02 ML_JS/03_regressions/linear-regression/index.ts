@@ -28,4 +28,5 @@ linearRegression.train();
 //   }`
 // );
 
-linearRegression.test(testFeatures, testLabels);
+const r2 = linearRegression.test(testFeatures, testLabels);
+console.log({ r2 });
