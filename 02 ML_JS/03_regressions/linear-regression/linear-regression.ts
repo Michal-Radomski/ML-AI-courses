@@ -84,6 +84,13 @@ class LinearRegression {
       this.gradientDescent();
     }
   }
+
+  test(testFeatures: number[][], testLabels: number[][]) {
+    let testFeatures2 = tf.tensor(testFeatures) as tf.Tensor<tf.Rank>;
+    let testLabels2 = tf.tensor(testLabels) as tf.Tensor<tf.Rank>;
+
+    testFeatures2 = tf.ones([testFeatures2.shape[0], 1]).concat(testFeatures2, 1);
+  }
 }
 
 export default LinearRegression;

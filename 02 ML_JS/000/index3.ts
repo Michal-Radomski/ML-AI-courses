@@ -54,7 +54,7 @@ numbers.sub(mean).div(variance.pow(0.5)).print();
 
 const onesTensor = tf.ones([2, 2], "int32");
 onesTensor.print();
-const zerosTensor = tf.zeros([2, 2], "int32");
+const zerosTensor = tf.zeros([2, 2], "float32");
 zerosTensor.print();
 
 const tensor1 = tf.tensor([1, 2, 3, 4, 5]);
