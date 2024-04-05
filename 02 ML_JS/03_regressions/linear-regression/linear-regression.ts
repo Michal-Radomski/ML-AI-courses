@@ -85,15 +85,19 @@ class LinearRegression {
     }
   }
 
-  test(testFeatures: number[][], testLabels: number[][]) {
+  test(testFeatures: number[][], testLabels: number[][]): number {
     let testFeatures2 = tf.tensor(testFeatures) as tf.Tensor<tf.Rank>;
     let testLabels2 = tf.tensor(testLabels) as tf.Tensor<tf.Rank>;
 
     testFeatures2 = tf.ones([testFeatures2.shape[0], 1]).concat(testFeatures2, 1);
 
     const predictions = testFeatures2.matMul(this.weights);
+    // predictions.print();
 
-    predictions.print();
+    const res = testLabels2.sub(predictions).pow(2).sum().arraySync() as number;
+    const tot = testLabels2.sub(testLabels2.mean()).pow(2).sum().arraySync() as number;
+
+    return 1 - res / tot;
   }
 }
 

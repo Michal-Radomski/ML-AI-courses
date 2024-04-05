@@ -65,3 +65,9 @@ const a = tf.tensor([
   [5, 6, 7, 8],
 ]);
 a.transpose().print(); // or tf.transpose(a)
+
+const b = a.sum().arraySync() as number;
+console.log("b:", b);
+
+const c = a.mean();
+c.print();
