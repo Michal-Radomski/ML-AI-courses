@@ -21,5 +21,5 @@ const linearRegression = new LinearRegression(features, labels, {
 });
 // console.log("linearRegression:", linearRegression);
 
-linearRegression.train();
-console.log(`Updated M is: ${linearRegression.m}, updated B is: ${linearRegression.b}`);
+// linearRegression.train();
+// console.log(`Updated M is: ${linearRegression.m}, updated B is: ${linearRegression.b}`);

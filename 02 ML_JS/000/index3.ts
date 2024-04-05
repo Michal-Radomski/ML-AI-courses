@@ -51,3 +51,8 @@ numbers.sub(mean).div(variance.pow(0.5)).print();
 //    [[-1.2247448, -1.2247448],
 //    [0         , 0         ],
 //    [1.2247448 , 1.2247448 ]]
+
+const onesTensor = tf.ones([2, 2], "int32");
+onesTensor.print();
+const zerosTensor = tf.zeros([2, 2], "int32");
+zerosTensor.print();
