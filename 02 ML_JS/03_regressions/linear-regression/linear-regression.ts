@@ -90,6 +90,10 @@ class LinearRegression {
     let testLabels2 = tf.tensor(testLabels) as tf.Tensor<tf.Rank>;
 
     testFeatures2 = tf.ones([testFeatures2.shape[0], 1]).concat(testFeatures2, 1);
+
+    const predictions = testFeatures2.matMul(this.weights);
+
+    predictions.print();
   }
 }
 

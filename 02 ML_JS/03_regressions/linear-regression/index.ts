@@ -22,8 +22,10 @@ const linearRegression = new LinearRegression(features, labels, {
 // console.log("linearRegression:", linearRegression);
 
 linearRegression.train();
-console.log(
-  `Updated M is: ${(linearRegression as any).weights.arraySync()[1]}, updated B is: ${
-    (linearRegression as any).weights.arraySync()[0]
-  }`
-);
+// console.log(
+//   `Updated M is: ${(linearRegression as any).weights.arraySync()[1]}, updated B is: ${
+//     (linearRegression as any).weights.arraySync()[0]
+//   }`
+// );
+
+linearRegression.test(testFeatures, testLabels);
