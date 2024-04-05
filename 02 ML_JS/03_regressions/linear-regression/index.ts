@@ -9,7 +9,7 @@ let {
 }: { features: number[][]; labels: number[][]; testFeatures: number[][]; testLabels: number[][] } = loadCSV("./cars.csv", {
   shuffle: true,
   splitTest: 50, //* Usually ~50%
-  dataColumns: ["horsepower", "weight", "displacement"],
+  dataColumns: ["horsepower"],
   labelColumns: ["mpg"],
 });
 // console.log({ features, labels, testFeatures, testLabels });
@@ -21,5 +21,9 @@ const linearRegression = new LinearRegression(features, labels, {
 });
 // console.log("linearRegression:", linearRegression);
 
-// linearRegression.train();
-// console.log(`Updated M is: ${linearRegression.m}, updated B is: ${linearRegression.b}`);
+linearRegression.train();
+console.log(
+  `Updated M is: ${(linearRegression as any).weights.arraySync()[1]}, updated B is: ${
+    (linearRegression as any).weights.arraySync()[0]
+  }`
+);

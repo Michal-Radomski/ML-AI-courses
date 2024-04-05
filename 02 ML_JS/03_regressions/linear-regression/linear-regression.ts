@@ -64,25 +64,26 @@ class LinearRegression {
   constructor(features: number[][], labels: number[][], options: Options) {
     this.features = tf.tensor(features) as tf.Tensor<tf.Rank>;
     this.labels = tf.tensor(labels) as tf.Tensor<tf.Rank>;
-    this.features = tf.ones([(this.features as unknown as tf.Tensor).shape[0]], "int32").concat(this.features, 1);
+    this.features = tf.ones([this.features.shape[0], 1], "float32").concat(this.features, 1);
 
     this.options = Object.assign({ learningRate: 0.1, iterations: 1000 }, options);
-    this.weights = tf.zeros([2, 1], "int32");
+    this.weights = tf.zeros([2, 1], "float32");
   }
 
-  gradientDescent(features: tf.Tensor<tf.Rank>, labels: tf.Tensor<tf.Rank>): void {
-    const currentGuesses = features.matMul(this.weights);
-    const differences = currentGuesses.sub(labels);
+  gradientDescent(): void {
+    const currentGuesses = this.features.matMul(this.weights);
+    const differences = currentGuesses.sub(this.labels);
 
-    const slopes = features.transpose().matMul(differences).div(features.shape[0]);
+    const slopes = this.features.transpose().matMul(differences).div(this.features.shape[0]);
+
     this.weights = this.weights.sub(slopes.mul(this.options.learningRate));
   }
 
-  // train(): void {
-  //   for (let i = 0; i < this.options.iterations; i++) {
-  //     this.gradientDescent();
-  //   }
-  // }
+  train(): void {
+    for (let i = 0; i < this.options.iterations; i++) {
+      this.gradientDescent();
+    }
+  }
 }
 
 export default LinearRegression;
