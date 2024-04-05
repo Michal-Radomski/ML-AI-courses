@@ -60,7 +60,7 @@ zerosTensor.print();
 const tensor1 = tf.tensor([1, 2, 3, 4, 5]);
 tensor1.div(5).print();
 
-const a = tf.tensor([
+const a: tf.Tensor<tf.Rank> = tf.tensor([
   [1, 2, 3, 4],
   [5, 6, 7, 8],
 ]);
@@ -69,5 +69,13 @@ a.transpose().print(); // or tf.transpose(a)
 const b = a.sum().arraySync() as number;
 console.log("b:", b);
 
-const c = a.mean();
+const c: tf.Tensor<tf.Rank> = a.mean();
 c.print();
+
+{
+  //* Standardization
+  const features = tf.tensor([[10], [20], [35], [95]]);
+  const { mean, variance } = tf.moments(features, 0);
+  const testTensor: tf.Tensor<tf.Rank> = features.sub(mean).div(variance.pow(0.5));
+  testTensor.print();
+}
