@@ -4,6 +4,7 @@ import * as tf from "@tensorflow/tfjs-node";
 interface Options {
   learningRate: number;
   iterations: number;
+  batchSize: number;
 }
 
 //* V1 - traditional calculation
@@ -76,11 +77,11 @@ class LinearRegression {
     // this.bHistory = [];
   }
 
-  gradientDescent(): void {
-    const currentGuesses = this.features.matMul(this.weights);
-    const differences = currentGuesses.sub(this.labels);
+  gradientDescent(features: tf.Tensor<tf.Rank>, labels: tf.Tensor<tf.Rank>): void {
+    const currentGuesses = features.matMul(this.weights);
+    const differences = currentGuesses.sub(labels);
 
-    const slopes = this.features.transpose().matMul(differences).div(this.features.shape[0]);
+    const slopes = features.transpose().matMul(differences).div(features.shape[0]);
 
     this.weights = this.weights.sub(slopes.mul(this.options.learningRate));
   }
@@ -90,7 +91,7 @@ class LinearRegression {
       // console.log("this.options.learningRate:", this.options.learningRate, { i });
       // this.bHistory.push((this.weights.arraySync() as number[][])[0][0]);
       // console.log("this.weights.arraySync():", this.weights.arraySync());
-      this.gradientDescent();
+      this.gradientDescent(this.features, this.labels);
       this.recordMSE();
       this.updateLearningRate();
     }
