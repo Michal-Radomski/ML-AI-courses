@@ -1,3 +1,5 @@
+const plot = require("node-remote-plot");
+
 const loadCSV = require("../load-csv");
 import LinearRegression from "./linear-regression";
 
@@ -33,3 +35,9 @@ linearRegression.train();
 // console.log("linearRegression.mseHistory:", linearRegression.mseHistory);
 const r2 = linearRegression.test(testFeatures, testLabels);
 console.log({ r2 });
+
+plot({
+  x: linearRegression.mseHistory.reverse(),
+  xLabel: "Iteration #",
+  yLabel: "Mean Squared Error",
+});
