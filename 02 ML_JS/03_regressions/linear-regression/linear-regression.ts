@@ -85,6 +85,7 @@ class LinearRegression {
 
   train(): void {
     for (let i = 0; i < this.options.iterations; i++) {
+      // console.log("this.options.learningRate:", this.options.learningRate, { i });
       this.gradientDescent();
       this.recordMSE();
     }
@@ -136,6 +137,7 @@ class LinearRegression {
 
     // console.log("mse:", mse);
     this.mseHistory.unshift(mse);
+    this.updateLearningRate();
   }
 
   updateLearningRate(): void {

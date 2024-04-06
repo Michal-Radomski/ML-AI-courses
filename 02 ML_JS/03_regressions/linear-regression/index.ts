@@ -16,7 +16,7 @@ let {
 // console.log("LinearRegression:", LinearRegression, typeof LinearRegression);
 
 const linearRegression = new LinearRegression(features, labels, {
-  learningRate: 0.1,
+  learningRate: 0.5,
   iterations: 100,
 });
 // console.log("linearRegression:", linearRegression);
@@ -30,5 +30,6 @@ linearRegression.train();
 //   }`
 // );
 
+// console.log("linearRegression.mseHistory:", linearRegression.mseHistory);
 const r2 = linearRegression.test(testFeatures, testLabels);
 console.log({ r2 });
