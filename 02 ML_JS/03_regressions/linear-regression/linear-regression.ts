@@ -87,11 +87,30 @@ class LinearRegression {
   }
 
   train(): void {
+    const batchQuantity = Math.floor(this.features.shape[0] / this.options.batchSize);
+
+    //* V1
+    // for (let i = 0; i < this.options.iterations; i++) {
+    //   // console.log("this.options.learningRate:", this.options.learningRate, { i });
+    //   // this.bHistory.push((this.weights.arraySync() as number[][])[0][0]);
+    //   // console.log("this.weights.arraySync():", this.weights.arraySync());
+    //   this.gradientDescent(this.features, this.labels);
+    //   this.recordMSE();
+    //   this.updateLearningRate();
+    // }
+
+    //* V2
     for (let i = 0; i < this.options.iterations; i++) {
-      // console.log("this.options.learningRate:", this.options.learningRate, { i });
-      // this.bHistory.push((this.weights.arraySync() as number[][])[0][0]);
-      // console.log("this.weights.arraySync():", this.weights.arraySync());
-      this.gradientDescent(this.features, this.labels);
+      for (let j = 0; j < batchQuantity; j++) {
+        const startIndex = j * this.options.batchSize;
+        const { batchSize } = this.options;
+
+        const featureSlice = this.features.slice([startIndex, 0], [batchSize, -1]);
+        const labelSlice = this.labels.slice([startIndex, 0], [batchSize, -1]);
+
+        this.gradientDescent(featureSlice, labelSlice);
+      }
+
       this.recordMSE();
       this.updateLearningRate();
     }
