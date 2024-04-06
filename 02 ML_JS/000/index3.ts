@@ -78,4 +78,8 @@ c.print();
   const { mean, variance } = tf.moments(features, 0);
   const testTensor: tf.Tensor<tf.Rank> = features.sub(mean).div(variance.pow(0.5));
   testTensor.print();
+
+  const testFeatures = tf.tensor([[15], [25]]);
+  const testTensor2: tf.Tensor<tf.Rank> = testFeatures.sub(mean).div(variance.pow(0.5));
+  testTensor2.print();
 }
