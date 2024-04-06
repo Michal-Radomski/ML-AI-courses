@@ -9,14 +9,14 @@ let {
 }: { features: number[][]; labels: number[][]; testFeatures: number[][]; testLabels: number[][] } = loadCSV("./cars.csv", {
   shuffle: true,
   splitTest: 50, //* Usually ~50%
-  dataColumns: ["horsepower"],
+  dataColumns: ["horsepower", "weight", "displacement"],
   labelColumns: ["mpg"],
 });
 // console.log({ features, labels, testFeatures, testLabels });
 // console.log("LinearRegression:", LinearRegression, typeof LinearRegression);
 
 const linearRegression = new LinearRegression(features, labels, {
-  learningRate: 0.0001,
+  learningRate: 0.1,
   iterations: 100,
 });
 // console.log("linearRegression:", linearRegression);

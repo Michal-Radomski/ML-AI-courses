@@ -62,13 +62,16 @@ class LinearRegression {
   weights: tf.Tensor<tf.Rank>;
   mean: tf.Tensor<tf.Rank> | undefined;
   variance: tf.Tensor<tf.Rank> | undefined;
+  mseHistory: number[];
 
   constructor(features: number[][], labels: number[][], options: Options) {
     this.labels = tf.tensor(labels) as tf.Tensor<tf.Rank>;
     this.features = this.processFeatures(features);
 
     this.options = Object.assign({ learningRate: 0.1, iterations: 1000 }, options);
-    this.weights = tf.zeros([2, 1], "float32");
+    this.weights = tf.zeros([this.features.shape[1]!, 1], "float32");
+
+    this.mseHistory = [];
   }
 
   gradientDescent(): void {
@@ -119,6 +122,18 @@ class LinearRegression {
     this.variance = variance;
 
     return features.sub(mean).div(variance.pow(0.5).add(1e-7));
+  }
+
+  recordMSE(): void {
+    const mse = this.features
+      .matMul(this.weights)
+      .sub(this.labels)
+      .pow(2)
+      .sum()
+      .div(this.features.shape[0])
+      .arraySync() as number;
+
+    this.mseHistory.unshift(mse);
   }
 }
 
