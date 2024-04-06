@@ -37,11 +37,11 @@ const r2 = linearRegression.test(testFeatures, testLabels);
 console.log({ r2 });
 
 plot({
-  // x: linearRegression.mseHistory.reverse(),
-  // xLabel: "Iteration #",
-  // yLabel: "Mean Squared Error",
-  x: linearRegression.bHistory,
-  y: linearRegression.mseHistory.reverse(),
-  xLabel: "Value of B",
+  x: linearRegression.mseHistory.reverse(),
+  xLabel: "Iteration #",
   yLabel: "Mean Squared Error",
+  // x: linearRegression.bHistory,
+  // y: linearRegression.mseHistory.reverse(),
+  // xLabel: "Value of B",
+  // yLabel: "Mean Squared Error",
 });

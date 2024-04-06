@@ -63,7 +63,7 @@ class LinearRegression {
   mean: tf.Tensor<tf.Rank> | undefined;
   variance: tf.Tensor<tf.Rank> | undefined;
   mseHistory: number[];
-  bHistory: number[];
+  // bHistory: number[];
 
   constructor(features: number[][], labels: number[][], options: Options) {
     this.labels = tf.tensor(labels) as tf.Tensor<tf.Rank>;
@@ -73,7 +73,7 @@ class LinearRegression {
     this.weights = tf.zeros([this.features.shape[1]!, 1], "float32");
 
     this.mseHistory = [];
-    this.bHistory = [];
+    // this.bHistory = [];
   }
 
   gradientDescent(): void {
@@ -88,7 +88,7 @@ class LinearRegression {
   train(): void {
     for (let i = 0; i < this.options.iterations; i++) {
       // console.log("this.options.learningRate:", this.options.learningRate, { i });
-      this.bHistory.push((this.weights.arraySync() as number[][])[0][0]);
+      // this.bHistory.push((this.weights.arraySync() as number[][])[0][0]);
       // console.log("this.weights.arraySync():", this.weights.arraySync());
       this.gradientDescent();
       this.recordMSE();
