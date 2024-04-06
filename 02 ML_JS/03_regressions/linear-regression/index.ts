@@ -18,7 +18,7 @@ let {
 // console.log("LinearRegression:", LinearRegression, typeof LinearRegression);
 
 const linearRegression = new LinearRegression(features, labels, {
-  learningRate: 0.5,
+  learningRate: 0.1,
   iterations: 100,
 });
 // console.log("linearRegression:", linearRegression);
@@ -37,7 +37,11 @@ const r2 = linearRegression.test(testFeatures, testLabels);
 console.log({ r2 });
 
 plot({
-  x: linearRegression.mseHistory.reverse(),
-  xLabel: "Iteration #",
+  // x: linearRegression.mseHistory.reverse(),
+  // xLabel: "Iteration #",
+  // yLabel: "Mean Squared Error",
+  x: linearRegression.bHistory,
+  y: linearRegression.mseHistory.reverse(),
+  xLabel: "Value of B",
   yLabel: "Mean Squared Error",
 });
