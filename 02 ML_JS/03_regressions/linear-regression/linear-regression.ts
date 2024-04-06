@@ -62,9 +62,8 @@ class LinearRegression {
   weights: tf.Tensor<tf.Rank>;
 
   constructor(features: number[][], labels: number[][], options: Options) {
-    this.features = tf.tensor(features) as tf.Tensor<tf.Rank>;
     this.labels = tf.tensor(labels) as tf.Tensor<tf.Rank>;
-    this.features = tf.ones([this.features.shape[0], 1], "float32").concat(this.features, 1);
+    this.features = this.processFeatures(features);
 
     this.options = Object.assign({ learningRate: 0.1, iterations: 1000 }, options);
     this.weights = tf.zeros([2, 1], "float32");
@@ -86,10 +85,8 @@ class LinearRegression {
   }
 
   test(testFeatures: number[][], testLabels: number[][]): number {
-    let testFeatures2 = tf.tensor(testFeatures) as tf.Tensor<tf.Rank>;
-    let testLabels2 = tf.tensor(testLabels) as tf.Tensor<tf.Rank>;
-
-    testFeatures2 = tf.ones([testFeatures2.shape[0], 1]).concat(testFeatures2, 1);
+    const testFeatures2 = this.processFeatures(testFeatures);
+    const testLabels2 = tf.tensor(testLabels) as tf.Tensor<tf.Rank>;
 
     const predictions = testFeatures2.matMul(this.weights);
     // predictions.print();
@@ -98,6 +95,12 @@ class LinearRegression {
     const tot = testLabels2.sub(testLabels2.mean()).pow(2).sum().arraySync() as number;
 
     return 1 - res / tot;
+  }
+
+  processFeatures(features: number[][]): tf.Tensor<tf.Rank> {
+    this.features = tf.tensor(features) as tf.Tensor<tf.Rank>;
+    const features2 = tf.ones([this.features.shape[0], 1], "float32").concat(this.features, 1) as tf.Tensor<tf.Rank>;
+    return features2;
   }
 }
 
