@@ -21,6 +21,8 @@ const linearRegression = new LinearRegression(features, labels, {
 });
 // console.log("linearRegression:", linearRegression);
 
+// linearRegression.features.print();
+
 linearRegression.train();
 // console.log(
 //   `Updated M is: ${(linearRegression as any).weights.arraySync()[1]}, updated B is: ${

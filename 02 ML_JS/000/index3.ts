@@ -82,4 +82,13 @@ c.print();
   const testFeatures = tf.tensor([[15], [25]]);
   const testTensor2: tf.Tensor<tf.Rank> = testFeatures.sub(mean).div(variance.pow(0.5));
   testTensor2.print();
+
+  const testTensor3 = tf.tensor([1, 1]).add(1e-7);
+  testTensor3.print();
+
+  const test4 = tf.ones([10, 1]);
+  test4.print();
+  const testTensor4: tf.Tensor<tf.Rank> = test4.sub(mean).div(variance.pow(0.5));
+  testTensor4.print();
+  testTensor4.add(1e-7).print();
 }

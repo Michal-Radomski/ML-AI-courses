@@ -101,13 +101,14 @@ class LinearRegression {
 
   processFeatures(features: number[][]): tf.Tensor<tf.Rank> {
     let features2 = tf.tensor(features) as tf.Tensor<tf.Rank>;
-    features2 = tf.ones([features2.shape[0], 1], "float32").concat(features2, 1) as tf.Tensor<tf.Rank>;
 
     if (this.mean && this.variance) {
       features2 = features2.sub(this.mean).div(this.variance.pow(0.5).add(1e-7));
     } else {
       features2 = this.standardize(features2);
     }
+
+    features2 = tf.ones([features2.shape[0], 1], "float32").concat(features2, 1) as tf.Tensor<tf.Rank>;
 
     return features2;
   }
