@@ -107,6 +107,7 @@ class LinearRegression {
 
         const featureSlice = this.features.slice([startIndex, 0], [batchSize, -1]);
         const labelSlice = this.labels.slice([startIndex, 0], [batchSize, -1]);
+        // console.log("featureSlice.arraySync(), labelSlice.arraySync():", featureSlice.arraySync(), labelSlice.arraySync());
 
         this.gradientDescent(featureSlice, labelSlice);
       }

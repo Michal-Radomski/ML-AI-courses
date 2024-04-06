@@ -92,3 +92,17 @@ c.print();
   testTensor4.print();
   testTensor4.add(1e-7).print();
 }
+
+//* Slice
+const test5 = tf.tensor([
+  [1, 2, 3],
+  [4, 5, 6],
+  [7, 8, 9],
+  [10, 11, 12],
+  [13, 14, 15],
+  [16, 17, 18],
+]);
+const test6 = test5.slice([0, 0], [3, -1]);
+const test7 = test5.slice([3, 0], [3, -1]);
+test6.print();
+test7.print();
