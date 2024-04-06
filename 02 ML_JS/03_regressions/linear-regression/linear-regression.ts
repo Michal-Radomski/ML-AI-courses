@@ -86,6 +86,7 @@ class LinearRegression {
   train(): void {
     for (let i = 0; i < this.options.iterations; i++) {
       this.gradientDescent();
+      this.recordMSE();
     }
   }
 
@@ -133,7 +134,20 @@ class LinearRegression {
       .div(this.features.shape[0])
       .arraySync() as number;
 
+    // console.log("mse:", mse);
     this.mseHistory.unshift(mse);
+  }
+
+  updateLearningRate(): void {
+    if (this.mseHistory.length < 2) {
+      return;
+    }
+
+    if (this.mseHistory[0] > this.mseHistory[1]) {
+      this.options.learningRate /= 2;
+    } else {
+      this.options.learningRate *= 1.05;
+    }
   }
 }
 
