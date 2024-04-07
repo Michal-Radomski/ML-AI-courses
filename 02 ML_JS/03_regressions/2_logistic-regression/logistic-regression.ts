@@ -51,7 +51,11 @@ class LogisticRegression {
 
   predict(observations: number[][]): tf.Tensor<tf.Rank> {
     // return this.processFeatures(observations).matMul(this.weights).sigmoid().round();
-    return this.processFeatures(observations).matMul(this.weights).sigmoid().greater(this.options.decisionBoundary!);
+    return this.processFeatures(observations)
+      .matMul(this.weights)
+      .sigmoid()
+      .greater(this.options.decisionBoundary!)
+      .cast("float32");
   }
 
   test(testFeatures: number[][], testLabels: number[][]): number {
