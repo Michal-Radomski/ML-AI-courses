@@ -123,3 +123,7 @@ test7.print();
 
 const prob = tf.tensor([[0.1], [0.2], [0.4], [0.8], [0.95]]);
 prob.greater(0.5).print();
+
+//* Log
+const y = tf.tensor1d([1, 15, 38, Math.E]);
+y.log().print();
