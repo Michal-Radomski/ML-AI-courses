@@ -2,9 +2,8 @@
   "name": "logistic_regression",
   "version": "1.0.0",
   "description": "",
-  "main": "index.ts",
   "scripts": {
-    "start": "clear && nodemon linear-regression/index.ts"
+    "start": "clear && nodemon 1_linear-regression/index.ts"
   },
   "author": "",
   "license": "ISC",
