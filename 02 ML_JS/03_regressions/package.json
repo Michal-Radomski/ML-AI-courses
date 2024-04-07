@@ -4,7 +4,8 @@
   "description": "",
   "scripts": {
     "start": "clear && nodemon 1_linear-regression/index.ts",
-    "start2": "clear && nodemon 2_logistic-regression/index.ts"
+    "start2": "clear && nodemon 2_logistic-regression/index.ts",
+    "start3": "clear && nodemon 2_multinominal-logistic-regression/index.ts"
   },
   "author": "",
   "license": "ISC",
