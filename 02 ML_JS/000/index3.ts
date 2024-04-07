@@ -106,3 +106,17 @@ const test6 = test5.slice([0, 0], [3, -1]);
 const test7 = test5.slice([3, 0], [3, -1]);
 test6.print();
 test7.print();
+
+{
+  //* Sigmoid
+  const weights = tf.tensor([[1], [1]]);
+  const features = tf.tensor([
+    [1, 95],
+    [1, 120],
+    [1, 135],
+    [1, 175],
+  ]);
+
+  const sigmoidTensor = features.matMul(weights).sigmoid();
+  sigmoidTensor.print();
+}
