@@ -1,7 +1,7 @@
 import * as tf from "@tensorflow/tfjs-node";
 // import _ from "lodash";
 
-interface Options {
+export interface Options {
   learningRate: number;
   iterations: number;
   batchSize: number;
