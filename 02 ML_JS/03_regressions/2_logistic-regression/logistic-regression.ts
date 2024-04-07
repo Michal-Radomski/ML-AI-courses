@@ -9,7 +9,7 @@ class LogisticRegression {
   weights: tf.Tensor<tf.Rank>;
   mean: tf.Tensor<tf.Rank> | undefined;
   variance: tf.Tensor<tf.Rank> | undefined;
-  mseHistory: number[];
+  costHistory: number[]; //* Cross Entropy
 
   constructor(features: number[][], labels: number[][], options: Options) {
     this.labels = tf.tensor(labels) as tf.Tensor<tf.Rank>;
@@ -18,7 +18,7 @@ class LogisticRegression {
     this.options = Object.assign({ learningRate: 0.1, iterations: 1000, decisionBoundary: 0.5 }, options);
     this.weights = tf.zeros([this.features.shape[1]!, 1], "float32");
 
-    this.mseHistory = [];
+    this.costHistory = [];
   }
 
   gradientDescent(features: tf.Tensor<tf.Rank>, labels: tf.Tensor<tf.Rank>): void {
@@ -44,7 +44,7 @@ class LogisticRegression {
         this.gradientDescent(featureSlice, labelSlice);
       }
 
-      this.recordMSE();
+      this.recordCost();
       this.updateLearningRate();
     }
   }
@@ -89,25 +89,20 @@ class LogisticRegression {
     return features.sub(mean).div(variance.pow(0.5).add(1e-7));
   }
 
-  recordMSE(): void {
-    const mse = this.features
-      .matMul(this.weights)
-      .sub(this.labels)
-      .pow(2)
-      .sum()
-      .div(this.features.shape[0])
-      .arraySync() as number;
-
-    this.mseHistory.unshift(mse);
-    this.updateLearningRate();
+  recordCost(): void {
+    const guesses = this.features.matMul(this.weights).sigmoid();
+    const termOne = this.labels.transpose().matMul(guesses.log());
+    const termTwo = this.labels.mul(-1).add(1).transpose().matMul(guesses.mul(-1).add(1).log());
+    const cost = termOne.add(termTwo).div(this.features.shape[0]).mul(-1).arraySync() as number;
+    this.costHistory.unshift(cost);
   }
 
   updateLearningRate(): void {
-    if (this.mseHistory.length < 2) {
+    if (this.costHistory.length < 2) {
       return;
     }
 
-    if (this.mseHistory[0] > this.mseHistory[1]) {
+    if (this.costHistory[0] > this.costHistory[1]) {
       this.options.learningRate /= 2;
     } else {
       this.options.learningRate *= 1.05;
