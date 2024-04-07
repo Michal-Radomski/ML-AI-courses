@@ -20,7 +20,7 @@ let {
 const linearRegression = new LinearRegression(features, labels, {
   learningRate: 0.1,
   iterations: 100,
-  batchSize: 10,
+  batchSize: 10, //* if batchSize: 1 -> Stochastic Gradient Descent
 });
 // console.log("linearRegression:", linearRegression);
 
@@ -46,3 +46,9 @@ console.log({ r2 });
 //   // xLabel: "Value of B",
 //   // yLabel: "Mean Squared Error",
 // });
+
+const predictions = linearRegression.predict([
+  [120, 2, 380],
+  [135, 2.1, 420],
+]);
+predictions.print();

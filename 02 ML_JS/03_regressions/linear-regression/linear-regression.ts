@@ -117,6 +117,10 @@ class LinearRegression {
     }
   }
 
+  predict(observations: number[][]): tf.Tensor<tf.Rank> {
+    return this.processFeatures(observations).matMul(this.weights);
+  }
+
   test(testFeatures: number[][], testLabels: number[][]): number {
     const testFeatures2 = this.processFeatures(testFeatures);
     const testLabels2 = tf.tensor(testLabels) as tf.Tensor<tf.Rank>;
