@@ -2,6 +2,7 @@ import * as tf from "@tensorflow/tfjs-node";
 // import _ from "lodash";
 
 export interface Options {
+  decisionBoundary?: number;
   learningRate: number;
   iterations: number;
   batchSize: number;

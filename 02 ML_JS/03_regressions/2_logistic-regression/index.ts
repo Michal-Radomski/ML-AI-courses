@@ -25,6 +25,7 @@ const logisticRegression = new LogisticRegression(features, labels, {
   learningRate: 0.5,
   iterations: 100,
   batchSize: 50,
+  decisionBoundary: 0.5,
 });
 
 logisticRegression.train();

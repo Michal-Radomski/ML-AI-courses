@@ -15,7 +15,7 @@ class LogisticRegression {
     this.labels = tf.tensor(labels) as tf.Tensor<tf.Rank>;
     this.features = this.processFeatures(features);
 
-    this.options = Object.assign({ learningRate: 0.1, iterations: 1000 }, options);
+    this.options = Object.assign({ learningRate: 0.1, iterations: 1000, decisionBoundary: 0.5 }, options);
     this.weights = tf.zeros([this.features.shape[1]!, 1], "float32");
 
     this.mseHistory = [];
@@ -50,11 +50,12 @@ class LogisticRegression {
   }
 
   predict(observations: number[][]): tf.Tensor<tf.Rank> {
-    return this.processFeatures(observations).matMul(this.weights).sigmoid();
+    // return this.processFeatures(observations).matMul(this.weights).sigmoid().round();
+    return this.processFeatures(observations).matMul(this.weights).sigmoid().greater(this.options.decisionBoundary!);
   }
 
   test(testFeatures: number[][], testLabels: number[][]): number {
-    const predictions = this.predict(testFeatures).round();
+    const predictions = this.predict(testFeatures);
     const testLabels2 = tf.tensor(testLabels) as tf.Tensor<tf.Rank>;
 
     const incorrect = predictions.sub(testLabels2).abs().sum().arraySync() as number;
