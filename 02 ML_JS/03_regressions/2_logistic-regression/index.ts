@@ -1,3 +1,5 @@
+const plot = require("node-remote-plot");
+
 const loadCSV = require("../load-csv");
 import LogisticRegression from "./logistic-regression";
 
@@ -17,4 +19,18 @@ let {
     },
   },
 });
-console.log({ features, labels, testFeatures, testLabels });
+// console.log({ features, labels, testFeatures, testLabels });
+
+const logisticRegression = new LogisticRegression(features, labels, {
+  learningRate: 0.5,
+  iterations: 100,
+  batchSize: 10,
+});
+
+logisticRegression.train();
+
+console.log(logisticRegression.test(testFeatures, testLabels));
+
+// plot({
+//   x: logisticRegression.costHistory.reverse(),
+// });
