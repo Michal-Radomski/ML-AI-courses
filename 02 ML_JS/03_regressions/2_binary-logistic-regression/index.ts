@@ -1,7 +1,7 @@
 const plot = require("node-remote-plot");
 
 const loadCSV = require("../load-csv");
-import LogisticRegression from "./logistic-regression";
+import BinaryLogisticRegression from "./binary_logistic-regression";
 
 let {
   features,
@@ -21,19 +21,19 @@ let {
 });
 // console.log({ features, labels, testFeatures, testLabels });
 
-const logisticRegression = new LogisticRegression(features, labels, {
+const binaryLogisticRegression = new BinaryLogisticRegression(features, labels, {
   learningRate: 0.5,
   iterations: 100,
   batchSize: 50,
   decisionBoundary: 0.5,
 });
 
-logisticRegression.train();
-// logisticRegression.predict([[130, 307, 1.75]]).print();
-// logisticRegression.predict([[88, 97, 1.065]]).print();
+binaryLogisticRegression.train();
+// binaryLogisticRegression.predict([[130, 307, 1.75]]).print();
+// binaryLogisticRegression.predict([[88, 97, 1.065]]).print();
 
-console.log(logisticRegression.test(testFeatures, testLabels));
+console.log(binaryLogisticRegression.test(testFeatures, testLabels));
 
 plot({
-  x: logisticRegression.costHistory.reverse(),
+  x: binaryLogisticRegression.costHistory.reverse(),
 });

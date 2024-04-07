@@ -2,7 +2,7 @@ import * as tf from "@tensorflow/tfjs-node";
 
 import { Options } from "../1_linear-regression/linear-regression";
 
-class LogisticRegression {
+class BinaryLogisticRegression {
   features: tf.Tensor<tf.Rank>;
   labels: tf.Tensor<tf.Rank>;
   options: Options;
@@ -112,4 +112,4 @@ class LogisticRegression {
   }
 }
 
-export default LogisticRegression;
+export default BinaryLogisticRegression;

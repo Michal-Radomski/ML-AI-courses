@@ -16,7 +16,7 @@ class MultinominalLogisticRegression {
     this.features = this.processFeatures(features);
 
     this.options = Object.assign({ learningRate: 0.1, iterations: 1000, decisionBoundary: 0.5 }, options);
-    this.weights = tf.zeros([this.features.shape[1]!, 1], "float32");
+    this.weights = tf.zeros([this.features.shape[1]!, this.labels.shape[1]!], "float32");
 
     this.costHistory = [];
   }
@@ -50,7 +50,6 @@ class MultinominalLogisticRegression {
   }
 
   predict(observations: number[][]): tf.Tensor<tf.Rank> {
-    // return this.processFeatures(observations).matMul(this.weights).sigmoid().round();
     return this.processFeatures(observations)
       .matMul(this.weights)
       .sigmoid()
@@ -95,7 +94,6 @@ class MultinominalLogisticRegression {
     const termTwo = this.labels.mul(-1).add(1).transpose().matMul(guesses.mul(-1).add(1).log());
     const cost = termOne.add(termTwo).div(this.features.shape[0]).mul(-1);
     const costToReturn = (cost as any).arraySync()[0][0] as number;
-    // console.log("costToReturn:", costToReturn);
     this.costHistory.unshift(costToReturn);
   }
 

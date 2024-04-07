@@ -1,3 +1,4 @@
+import * as _ from "lodash";
 // const plot = require("node-remote-plot");
 
 const loadCSV = require("../load-csv");
@@ -8,26 +9,33 @@ let {
   labels,
   testFeatures,
   testLabels,
-}: { features: number[][]; labels: number[][]; testFeatures: number[][]; testLabels: number[][] } = loadCSV("./cars.csv", {
+}: { features: number[][]; labels: number[][][]; testFeatures: number[][]; testLabels: number[][] } = loadCSV("./cars.csv", {
   shuffle: true,
   splitTest: 50, //* Usually ~50%
   dataColumns: ["horsepower", "displacement", "weight"],
-  labelColumns: ["passed_emissions"],
+  labelColumns: ["mpg"],
   converters: {
-    passed_emissions: (value: string) => {
-      return value === "TRUE" ? 1 : 0;
+    mpg: (value: string) => {
+      const mpg = parseFloat(value);
+      if (mpg < 15) {
+        return [1, 0, 0];
+      } else if (mpg < 30) {
+        return [0, 1, 0];
+      } else {
+        return [0, 0, 1];
+      }
     },
   },
 });
-// console.log({ features, labels, testFeatures, testLabels });
+// console.log("_.flatMap(labels):", _.flatMap(labels));
 
-const multinominalLogisticRegression = new MultinominalLogisticRegression(features, labels, {
+const multinominalLogisticRegression = new MultinominalLogisticRegression(features, _.flatMap(labels), {
   learningRate: 0.5,
   iterations: 100,
   batchSize: 50,
-  decisionBoundary: 0.5,
 });
 
-multinominalLogisticRegression.train();
+multinominalLogisticRegression.weights.print();
 
-console.log(multinominalLogisticRegression.test(testFeatures, testLabels));
+multinominalLogisticRegression.train();
+multinominalLogisticRegression.predict([[215, 440, 2.16]]).print();
