@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "clear && nodemon 1_linear-regression/index.ts"
+    "start": "clear && nodemon 1_linear-regression/index.ts",
+    "start2": "clear && nodemon 2_logistic-regression/index.ts"
   },
   "author": "",
   "license": "ISC",
