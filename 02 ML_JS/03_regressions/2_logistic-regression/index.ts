@@ -34,6 +34,6 @@ logisticRegression.train();
 
 console.log(logisticRegression.test(testFeatures, testLabels));
 
-// plot({
-//   x: logisticRegression.costHistory.reverse(),
-// });
+plot({
+  x: logisticRegression.costHistory.reverse(),
+});

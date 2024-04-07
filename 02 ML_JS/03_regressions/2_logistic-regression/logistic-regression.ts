@@ -93,8 +93,10 @@ class LogisticRegression {
     const guesses = this.features.matMul(this.weights).sigmoid();
     const termOne = this.labels.transpose().matMul(guesses.log());
     const termTwo = this.labels.mul(-1).add(1).transpose().matMul(guesses.mul(-1).add(1).log());
-    const cost = termOne.add(termTwo).div(this.features.shape[0]).mul(-1).arraySync() as number;
-    this.costHistory.unshift(cost);
+    const cost = termOne.add(termTwo).div(this.features.shape[0]).mul(-1);
+    const costToReturn = (cost as any).arraySync()[0][0] as number;
+    // console.log("costToReturn:", costToReturn);
+    this.costHistory.unshift(costToReturn);
   }
 
   updateLearningRate(): void {
