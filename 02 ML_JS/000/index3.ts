@@ -146,3 +146,8 @@ y.log().print();
   const resMin = features.argMin(0);
   resMin.print();
 }
+
+const test8 = tf.tensor([0, 1, 2]);
+test8.cast("bool").print();
+test8.cast("bool").logicalNot().print();
+test8.cast("bool").logicalNot().cast("float32").print();

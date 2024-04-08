@@ -90,10 +90,13 @@ class MultinominalLogisticRegression {
 
   standardize(features: tf.Tensor<tf.Rank>) {
     const { mean, variance } = tf.moments(features, 0);
-    this.mean = mean;
-    this.variance = variance;
 
-    return features.sub(mean).div(variance.pow(0.5).add(1e-7));
+    const filler = variance.cast("bool").logicalNot().cast("float32");
+
+    this.mean = mean;
+    this.variance = variance.add(filler);
+
+    return features.sub(mean).div(this.variance.pow(0.5).add(1e-7));
   }
 
   recordCost(): void {
