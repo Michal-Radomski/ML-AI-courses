@@ -57,16 +57,18 @@ class MultinominalLogisticRegression {
         .matMul(this.weights)
         // .sigmoid()
         .softmax()
-        .greater(this.options.decisionBoundary!)
-        .cast("float32")
+        // .greater(this.options.decisionBoundary!)
+        // .cast("float32")
+        .argMax(1)
     );
   }
 
   test(testFeatures: number[][], testLabels: number[][]): number {
     const predictions = this.predict(testFeatures);
-    const testLabels2 = tf.tensor(testLabels) as tf.Tensor<tf.Rank>;
+    const testLabels2 = tf.tensor(testLabels).argMax(1) as tf.Tensor<tf.Rank>;
 
-    const incorrect = predictions.sub(testLabels2).abs().sum().arraySync() as number;
+    // const incorrect = predictions.sub(testLabels2).abs().sum().arraySync() as number;
+    const incorrect = predictions.notEqual(testLabels2).sum().arraySync() as number;
 
     return (predictions.shape[0] - incorrect) / predictions.shape[0];
   }
