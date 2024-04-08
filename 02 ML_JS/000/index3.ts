@@ -127,3 +127,17 @@ prob.greater(0.5).print();
 //* Log
 const y = tf.tensor1d([1, 15, 38, Math.E]);
 y.log().print();
+
+{
+  //* Softmax
+  const weights = tf.tensor([[1], [1]]);
+  const features = tf.tensor([
+    [1, 95],
+    [1, 120],
+    [1, 135],
+    [1, 175],
+  ]);
+
+  const softmaxTensor = features.matMul(weights).softmax();
+  softmaxTensor.print();
+}
