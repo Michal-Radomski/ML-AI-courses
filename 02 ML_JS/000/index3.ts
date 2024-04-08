@@ -129,7 +129,7 @@ const y = tf.tensor1d([1, 15, 38, Math.E]);
 y.log().print();
 
 {
-  //* Softmax
+  //* Softmax + argMax/argMin
   const weights = tf.tensor([[1], [1]]);
   const features = tf.tensor([
     [1, 95],
@@ -140,4 +140,9 @@ y.log().print();
 
   const softmaxTensor = features.matMul(weights).softmax();
   softmaxTensor.print();
+
+  const resMax = features.argMax(0);
+  resMax.print();
+  const resMin = features.argMin(0);
+  resMin.print();
 }
