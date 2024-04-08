@@ -32,10 +32,11 @@ let {
 const multinominalLogisticRegression = new MultinominalLogisticRegression(features, _.flatMap(labels), {
   learningRate: 0.5,
   iterations: 100,
-  batchSize: 50,
+  batchSize: 10,
 });
 
 multinominalLogisticRegression.weights.print();
 
 multinominalLogisticRegression.train();
-multinominalLogisticRegression.predict([[215, 440, 2.16]]).print();
+// multinominalLogisticRegression.predict([[215, 440, 2.16]]).print();
+multinominalLogisticRegression.predict([[150, 200, 2.223]]).print();

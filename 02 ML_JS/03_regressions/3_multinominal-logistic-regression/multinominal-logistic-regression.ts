@@ -22,7 +22,8 @@ class MultinominalLogisticRegression {
   }
 
   gradientDescent(features: tf.Tensor<tf.Rank>, labels: tf.Tensor<tf.Rank>): void {
-    const currentGuesses = features.matMul(this.weights).sigmoid();
+    // const currentGuesses = features.matMul(this.weights).sigmoid();
+    const currentGuesses = features.matMul(this.weights).softmax();
     const differences = currentGuesses.sub(labels);
 
     const slopes = features.transpose().matMul(differences).div(features.shape[0]);
@@ -49,12 +50,16 @@ class MultinominalLogisticRegression {
     }
   }
 
+  //* V1 -> sigmoid, V2 -> softmax !
   predict(observations: number[][]): tf.Tensor<tf.Rank> {
-    return this.processFeatures(observations)
-      .matMul(this.weights)
-      .sigmoid()
-      .greater(this.options.decisionBoundary!)
-      .cast("float32");
+    return (
+      this.processFeatures(observations)
+        .matMul(this.weights)
+        // .sigmoid()
+        .softmax()
+        .greater(this.options.decisionBoundary!)
+        .cast("float32")
+    );
   }
 
   test(testFeatures: number[][], testLabels: number[][]): number {
@@ -89,7 +94,8 @@ class MultinominalLogisticRegression {
   }
 
   recordCost(): void {
-    const guesses = this.features.matMul(this.weights).sigmoid();
+    // const guesses = this.features.matMul(this.weights).sigmoid();
+    const guesses = this.features.matMul(this.weights).softmax();
     const termOne = this.labels.transpose().matMul(guesses.log());
     const termTwo = this.labels.mul(-1).add(1).transpose().matMul(guesses.mul(-1).add(1).log());
     const cost = termOne.add(termTwo).div(this.features.shape[0]).mul(-1);
