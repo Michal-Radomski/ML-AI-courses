@@ -11,13 +11,14 @@ function loadData(): {
   features: number[][];
   labels: number[][];
 } {
-  const mnistData = mnist.training(0, 10);
+  const mnistData = mnist.training(0, 10000);
   // const mnistData = mnist.training(0, 60000);
 
   const features = mnistData.images.values.map((image: number[][]) => {
     // console.log("image:", image);
     return _.flatMap(image);
   }) as number[][];
+  // console.log("features:", features);
 
   const encodedLabels = mnistData.labels.values.map((label: number) => {
     // console.log("label:", label);
@@ -28,8 +29,7 @@ function loadData(): {
     return row;
   }) as number[][];
 
-  // console.log("features:", features);
-  // console.log("encodedLabels:", encodedLabels);
+  // console.log("encodedLabels:", encodedLabels);s
   return { features, labels: encodedLabels };
 }
 
