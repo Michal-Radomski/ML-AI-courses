@@ -151,3 +151,11 @@ const test8 = tf.tensor([0, 1, 2]);
 test8.cast("bool").print();
 test8.cast("bool").logicalNot().print();
 test8.cast("bool").logicalNot().cast("float32").print();
+
+const test9 = tf.tidy(() => {
+  tf.tensor([1, 2, 4]);
+  tf.tensor([1, 2, 4]);
+  tf.tensor([1, 2, 4]);
+  return tf.tensor([4, 5, 6]);
+});
+test9.print();

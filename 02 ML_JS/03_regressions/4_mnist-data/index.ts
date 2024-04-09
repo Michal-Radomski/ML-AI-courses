@@ -12,7 +12,7 @@ function loadData(): {
   labels: number[][];
 } {
   const mnistData = mnist.training(0, 10000);
-  // const mnistData = mnist.training(0, 60000);
+  // const mnistData = mnist.training(0, 60000); //* Too many!
 
   const features = mnistData.images.values.map((image: number[][]) => {
     // console.log("image:", image);
@@ -30,7 +30,7 @@ function loadData(): {
   }) as number[][];
 
   // console.log("encodedLabels:", encodedLabels);s
-  return { features, labels: encodedLabels };
+  return { features, labels: encodedLabels }; //* To trigger Garbage Collection!
 }
 
 const { features, labels } = loadData();
