@@ -22,14 +22,14 @@ class MultinominalLogisticRegression {
     this.costHistory = [];
   }
 
-  gradientDescent(features: tf.Tensor<tf.Rank>, labels: tf.Tensor<tf.Rank>): void {
+  gradientDescent(features: tf.Tensor<tf.Rank>, labels: tf.Tensor<tf.Rank>): tf.Tensor<tf.Rank> {
     // const currentGuesses = features.matMul(this.weights).sigmoid();
     const currentGuesses = features.matMul(this.weights).softmax();
     const differences = currentGuesses.sub(labels);
 
     const slopes = features.transpose().matMul(differences).div(features.shape[0]);
 
-    this.weights = this.weights.sub(slopes.mul(this.options.learningRate));
+    return this.weights.sub(slopes.mul(this.options.learningRate));
   }
 
   train(): void {
@@ -40,10 +40,12 @@ class MultinominalLogisticRegression {
         const startIndex = j * this.options.batchSize;
         const { batchSize } = this.options;
 
-        const featureSlice = this.features.slice([startIndex, 0], [batchSize, -1]);
-        const labelSlice = this.labels.slice([startIndex, 0], [batchSize, -1]);
+        this.weights = tf.tidy(() => {
+          const featureSlice = this.features.slice([startIndex, 0], [batchSize, -1]);
+          const labelSlice = this.labels.slice([startIndex, 0], [batchSize, -1]);
 
-        this.gradientDescent(featureSlice, labelSlice);
+          return this.gradientDescent(featureSlice, labelSlice);
+        });
       }
 
       this.recordCost();
