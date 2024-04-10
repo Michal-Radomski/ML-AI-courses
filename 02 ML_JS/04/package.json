@@ -1,0 +1,18 @@
+{
+  "name": "load-csv",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "clear && nodemon load-csv.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "shuffle-seed": "^1.1.6"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.17.0",
+    "@types/node": "^20.12.7"
+  }
+}
