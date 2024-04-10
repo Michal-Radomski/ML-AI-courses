@@ -89,10 +89,10 @@ class MultinominalLogisticRegression {
   }
 
   recordCost(): void {
-    const costToReturn = tf.tidy(() => {
+    const costToReturn: number = tf.tidy(() => {
       const guesses = this.features.matMul(this.weights).softmax();
-      const termOne = this.labels.transpose().matMul(guesses.log());
-      const termTwo = this.labels.mul(-1).add(1).transpose().matMul(guesses.mul(-1).add(1).log());
+      const termOne = this.labels.transpose().matMul(guesses.add(1e-7).log()); //* Add a constant to avoid log(0)
+      const termTwo = this.labels.mul(-1).add(1).transpose().matMul(guesses.mul(-1).add(1).add(1e-7).log());
       const cost = termOne.add(termTwo).div(this.features.shape[0]).mul(-1);
       return (cost as any).arraySync()[0][0] as number;
     });

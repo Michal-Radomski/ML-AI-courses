@@ -29,7 +29,7 @@ const { features, labels } = loadData();
 
 const multinominalLogisticRegression = new MultinominalLogisticRegression(features, labels, {
   learningRate: 1,
-  iterations: 40,
+  iterations: 100,
   batchSize: 500,
 });
 
@@ -49,3 +49,5 @@ console.log("Accuracy is", accuracy);
 plot({
   x: multinominalLogisticRegression.costHistory.reverse(),
 });
+
+// console.log("multinominalLogisticRegression.costHistory:", multinominalLogisticRegression.costHistory);
