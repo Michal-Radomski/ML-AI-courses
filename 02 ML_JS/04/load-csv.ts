@@ -22,7 +22,7 @@ const loadCSV = (
     dataColumns = [] as string[],
     labelColumns = [] as string[],
     converters = {} as Converters,
-    shuffle = false,
+    shuffle = false as boolean | number,
     splitTest = false,
   }
 ) => {
