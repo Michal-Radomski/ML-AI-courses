@@ -2,18 +2,29 @@ import fs from "fs";
 import _ from "lodash";
 const shuffleSeed = require("shuffle-seed");
 
-function extractColumns(data: any, columnNames: any) {
-  const headers = _.first(data);
+function extractColumns(data: string[][], columnNames: string[]) {
+  const headers = _.first(data) as string[];
 
-  const indexes = _.map(columnNames, (column) => (headers as any).indexOf(column));
+  const indexes = _.map(columnNames, (column) => headers.indexOf(column));
   const extracted = _.map(data, (row) => _.pullAt(row, indexes));
+  // console.log("extracted:", extracted);
 
   return extracted;
 }
 
-export const loadCSV = (
+interface Converters {
+  [key: string]: (value: string) => (string | number)[];
+}
+
+const loadCSV = (
   filename: string,
-  { dataColumns = [], labelColumns = [], converters = {} as any, shuffle = false, splitTest = false }
+  {
+    dataColumns = [] as string[],
+    labelColumns = [] as string[],
+    converters = {} as Converters,
+    shuffle = false,
+    splitTest = false,
+  }
 ) => {
   const data = fs.readFileSync(filename, { encoding: "utf-8" }) as string;
 
@@ -38,32 +49,38 @@ export const loadCSV = (
       const result = parseFloat(element.replace('"', ""));
       return _.isNaN(result) ? element : result;
     });
-  });
-  console.log("data4:", data4);
+  }) as string[][];
+  // console.log("data4:", data4);
 
-  // let labels = extractColumns(data, labelColumns);
-  // data = extractColumns(data, dataColumns);
+  let labels = extractColumns(data4, labelColumns) as string[][];
+  let dataToReturn = extractColumns(data4, dataColumns) as string[][];
+  console.log({ labels, dataToReturn });
 
-  // data.shift();
-  // labels.shift();
+  dataToReturn.shift();
+  labels.shift();
 
-  // if (shuffle) {
-  //   data = shuffleSeed.shuffle(data, "phrase");
-  //   labels = shuffleSeed.shuffle(labels, "phrase");
-  // }
+  if (shuffle) {
+    dataToReturn = shuffleSeed.shuffle(data, "phrase");
+    labels = shuffleSeed.shuffle(labels, "phrase");
+  }
 
-  // if (splitTest) {
-  //   const trainSize = _.isNumber(splitTest) ? splitTest : Math.floor(data.length / 2);
+  if (splitTest) {
+    const trainSize = _.isNumber(splitTest) ? splitTest : Math.floor(dataToReturn.length / 2);
 
-  //   return {
-  //     features: data.slice(trainSize),
-  //     labels: labels.slice(trainSize),
-  //     testFeatures: data.slice(0, trainSize),
-  //     testLabels: labels.slice(0, trainSize),
-  //   };
-  // } else {
-  //   return { features: data, labels };
-  // }
+    return {
+      features: dataToReturn.slice(trainSize),
+      labels: labels.slice(trainSize),
+      testFeatures: dataToReturn.slice(0, trainSize),
+      testLabels: labels.slice(0, trainSize),
+    };
+  } else {
+    return { features: data, labels };
+  }
 };
 
-loadCSV("./data.csv", {});
+loadCSV("./data.csv", {
+  shuffle: true,
+  splitTest: false,
+  dataColumns: ["id", "height", "value"],
+  labelColumns: ["passed"],
+});
