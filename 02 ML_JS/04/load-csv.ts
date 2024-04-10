@@ -22,8 +22,8 @@ const loadCSV = (
     dataColumns = [] as string[],
     labelColumns = [] as string[],
     converters = {} as Converters,
-    shuffle = false as boolean | number,
-    splitTest = false,
+    shuffle = false,
+    splitTest = false as boolean | number,
   }
 ) => {
   const data = fs.readFileSync(filename, { encoding: "utf-8" }) as string;
@@ -54,7 +54,7 @@ const loadCSV = (
 
   let labels = extractColumns(data4, labelColumns) as string[][];
   let dataToReturn = extractColumns(data4, dataColumns) as string[][];
-  console.log({ labels, dataToReturn });
+  // console.log({ labels, dataToReturn });
 
   dataToReturn.shift();
   labels.shift();
@@ -65,32 +65,26 @@ const loadCSV = (
   }
 
   if (splitTest) {
-    const trainSize = _.isNumber(splitTest) ? splitTest : Math.floor(dataToReturn.length / 2);
+    const trainSize = _.isNumber(splitTest) ? splitTest : Math.floor(dataToReturn?.length / 2);
+    // console.log({ trainSize });
 
     return {
-      features: dataToReturn.slice(trainSize),
-      labels: labels.slice(trainSize),
-      testFeatures: dataToReturn.slice(0, trainSize),
-      testLabels: labels.slice(0, trainSize),
+      features: dataToReturn?.slice(0, trainSize),
+      labels: labels?.slice(0, trainSize),
+      testFeatures: dataToReturn?.slice(trainSize),
+      testLabels: labels?.slice(trainSize),
     };
   } else {
     return { features: data, labels };
   }
 };
 
-loadCSV("./data.csv", {
-  shuffle: true,
-  splitTest: false,
+const { features, labels, testFeatures, testLabels } = loadCSV("./data.csv", {
+  shuffle: false,
+  splitTest: 1,
   dataColumns: ["id", "height", "value"],
   labelColumns: ["passed"],
   converters: { passed: (val) => (val === "TRUE" ? 1 : 0) },
 });
 
-// const testData = loadCSV("./data.csv", {
-//   shuffle: true,
-//   splitTest: false,
-//   dataColumns: ["id", "height", "value"],
-//   labelColumns: ["passed"],
-// });
-
-// console.log("testData:", testData);
+console.log({ features, labels, testFeatures, testLabels });
