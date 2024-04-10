@@ -23,12 +23,9 @@ class MultinominalLogisticRegression {
   }
 
   gradientDescent(features: tf.Tensor<tf.Rank>, labels: tf.Tensor<tf.Rank>): tf.Tensor<tf.Rank> {
-    // const currentGuesses = features.matMul(this.weights).sigmoid();
     const currentGuesses = features.matMul(this.weights).softmax();
     const differences = currentGuesses.sub(labels);
-
     const slopes = features.transpose().matMul(differences).div(features.shape[0]);
-
     return this.weights.sub(slopes.mul(this.options.learningRate));
   }
 
@@ -53,24 +50,14 @@ class MultinominalLogisticRegression {
     }
   }
 
-  //* V1 -> sigmoid, V2 -> softmax !
   predict(observations: number[][]): tf.Tensor<tf.Rank> {
-    return (
-      this.processFeatures(observations)
-        .matMul(this.weights)
-        // .sigmoid()
-        .softmax()
-        // .greater(this.options.decisionBoundary!)
-        // .cast("float32")
-        .argMax(1)
-    );
+    return this.processFeatures(observations).matMul(this.weights).softmax().argMax(1);
   }
 
   test(testFeatures: number[][], testLabels: number[][]): number {
     const predictions = this.predict(testFeatures);
     const testLabels2 = tf.tensor(testLabels).argMax(1) as tf.Tensor<tf.Rank>;
 
-    // const incorrect = predictions.sub(testLabels2).abs().sum().arraySync() as number;
     const incorrect = predictions.notEqual(testLabels2).sum().arraySync() as number;
 
     return (predictions.shape[0] - incorrect) / predictions.shape[0];
@@ -102,12 +89,13 @@ class MultinominalLogisticRegression {
   }
 
   recordCost(): void {
-    // const guesses = this.features.matMul(this.weights).sigmoid();
-    const guesses = this.features.matMul(this.weights).softmax();
-    const termOne = this.labels.transpose().matMul(guesses.log());
-    const termTwo = this.labels.mul(-1).add(1).transpose().matMul(guesses.mul(-1).add(1).log());
-    const cost = termOne.add(termTwo).div(this.features.shape[0]).mul(-1);
-    const costToReturn = (cost as any).arraySync()[0][0] as number;
+    const costToReturn = tf.tidy(() => {
+      const guesses = this.features.matMul(this.weights).softmax();
+      const termOne = this.labels.transpose().matMul(guesses.log());
+      const termTwo = this.labels.mul(-1).add(1).transpose().matMul(guesses.mul(-1).add(1).log());
+      const cost = termOne.add(termTwo).div(this.features.shape[0]).mul(-1);
+      return (cost as any).arraySync()[0][0] as number;
+    });
     this.costHistory.unshift(costToReturn);
   }
 

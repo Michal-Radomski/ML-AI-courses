@@ -4,15 +4,11 @@ const mnist = require("mnist-data");
 
 import MultinominalLogisticRegression from "./multinominal-logistic-regression";
 
-// const mnistData = mnist.training(0, 1);
-// console.log("mnistData.images.values:", mnistData.images.values);
-
 function loadData(): {
   features: number[][];
   labels: number[][];
 } {
-  const mnistData = mnist.training(0, 10000);
-  // const mnistData = mnist.training(0, 60000); //* Too many!
+  const mnistData = mnist.training(0, 60000);
 
   const features = mnistData.images.values.map((image: number[][]) => {
     // console.log("image:", image);
@@ -21,15 +17,11 @@ function loadData(): {
   // console.log("features:", features);
 
   const encodedLabels = mnistData.labels.values.map((label: number) => {
-    // console.log("label:", label);
     const row = new Array(10).fill(0);
-    // console.log("row:", row);
-
     row[label] = 1;
     return row;
   }) as number[][];
 
-  // console.log("encodedLabels:", encodedLabels);s
   return { features, labels: encodedLabels }; //* To trigger Garbage Collection!
 }
 
