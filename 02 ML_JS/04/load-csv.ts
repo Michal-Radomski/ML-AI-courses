@@ -13,7 +13,7 @@ function extractColumns(data: string[][], columnNames: string[]) {
 }
 
 interface Converters {
-  [key: string]: (value: string) => (string | number)[];
+  [key: string]: (value: string) => (string | number | boolean)[];
 }
 
 const loadCSV = (
@@ -84,3 +84,12 @@ loadCSV("./data.csv", {
   dataColumns: ["id", "height", "value"],
   labelColumns: ["passed"],
 });
+
+// const testData = loadCSV("./data.csv", {
+//   shuffle: true,
+//   splitTest: false,
+//   dataColumns: ["id", "height", "value"],
+//   labelColumns: ["passed"],
+// });
+
+// console.log("testData:", testData);
