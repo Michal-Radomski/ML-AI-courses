@@ -23,8 +23,11 @@ const App = (): JSX.Element => {
   model.fit(xs, ys, { epochs: 10 }).then(() => {
     // Use the model to do inference on a data point the model hasn't seen before:
     const output = model.predict(tf.tensor2d([5], [1, 1])) as CustomTensor;
+    //  console.log("output:", output, typeof output);
     output.print();
   });
+
+  // console.log("tf.getBackend():", tf.getBackend());
 
   return (
     <React.Fragment>
