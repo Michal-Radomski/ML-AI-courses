@@ -17,7 +17,7 @@
   "scripts": {
     "start": "BROWSER=NONE react-scripts start",
     "build": "react-scripts build",
-    "node": "nodemon ./node/index.ts"
+    "node": "clear && nodemon ./node/index.ts"
   },
   "eslintConfig": {
     "extends": [
