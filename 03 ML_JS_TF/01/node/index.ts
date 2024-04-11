@@ -1,6 +1,7 @@
 import * as tf from "@tensorflow/tfjs-node";
 
 // console.log("tf.version", tf.version);
+// console.log("tf.getBackend():", tf.getBackend());
 
 // Define a simple model.
 const model = tf.sequential();
