@@ -8,3 +8,4 @@ Files created during Udemy.com Machine Learning &amp; Artificial Intelligence co
    tensors is [here](https://theneuralblog.com/basic-operations-on-tensors).
 
 3. [Machine Learning in Javascript with TensorFlow.js](https://www.udemy.com/course/machine-learning-in-javascript-with-tensorflow-js).
+   Good article about tensors is [here](https://medium.com/@edoh.dev/data-processing-with-tensorflow-js-b42175e0e86e).
