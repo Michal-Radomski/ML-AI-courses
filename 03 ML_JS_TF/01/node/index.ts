@@ -29,3 +29,18 @@ scalar2.print();
 scalar3.print();
 
 tf.tensor1d([1, 2, 3]).print();
+
+tf.tensor2d([
+  [1, 2, 3],
+  [4, 5, 6],
+]).print(); //* The same
+tf.tensor2d([1, 2, 3, 4, 5, 6], [2, 3]).print(); //* The same
+
+tf.tensor3d([
+  [
+    [1, 2],
+    [3, 4],
+    [5, 6],
+  ],
+]).print(); //* The same
+tf.tensor3d([1, 2, 3, 4, 5, 6, 7, 8], [2, 2, 2]).print(); //* The same
