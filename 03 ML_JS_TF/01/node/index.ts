@@ -121,3 +121,15 @@ function normalize(data: tf.Tensor1D): tf.Tensor1D {
 }
 const t4 = normalize(t3);
 t4.print();
+
+for (let i = 0; i < 100; i++) {
+  const createdTensor = tf.tensor1d([1, 2, 3]);
+  createdTensor.dispose();
+}
+for (let i = 0; i < 100; i++) {
+  tf.tidy(() => {
+    tf.tensor1d([4, 5, 6]);
+    // Be careful not to return the tensor, unless you want it to stay in memory!
+  });
+}
+console.log(tf.memory());
