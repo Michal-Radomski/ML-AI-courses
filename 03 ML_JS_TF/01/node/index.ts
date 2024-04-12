@@ -44,3 +44,24 @@ tf.tensor3d([
   ],
 ]).print(); //* The same
 tf.tensor3d([1, 2, 3, 4, 5, 6, 7, 8], [2, 2, 2]).print(); //* The same
+
+const a = tf.tensor1d([1, 2, 3, 4]);
+const b = tf.tensor1d([10, 20, 30, 40]);
+a.add(b).print(); // or tf.add(a, b)
+
+const x = tf.tensor1d([1, 2, 4, -1]);
+x.sqrt().print(); // or tf.sqrt(x)
+
+const a1 = tf.tensor1d([1, 2]);
+const b1 = tf.tensor2d([
+  [1, 2],
+  [3, 4],
+]);
+const c1 = tf.tensor2d([
+  [1, 2, 3],
+  [4, 5, 6],
+]);
+
+a1.dot(b1).print(); // or tf.dot(a, b)
+b1.dot(a1).print();
+b1.dot(c1).print();
