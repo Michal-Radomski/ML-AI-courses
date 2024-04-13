@@ -31,6 +31,28 @@ const Plot = (): JSX.Element => {
   //   return denormalizedTensor;
   // };
 
+  //* Create a Model
+  const createModel = (): tf.Sequential => {
+    const model: tf.Sequential = tf.sequential();
+
+    model.add(
+      tf.layers.dense({
+        units: 1,
+        useBias: true,
+        activation: "linear",
+        inputDim: 1,
+      })
+    );
+
+    const optimizer = tf.train.sgd(0.1);
+    model.compile({
+      loss: "meanSquaredError",
+      optimizer,
+    });
+
+    return model;
+  };
+
   //* Import data from data.csv and set local state
   React.useEffect(() => {
     // tf.ready().then(() => {
@@ -47,7 +69,7 @@ const Plot = (): JSX.Element => {
       // const dataArray = (await data.toArray()) as unknown as CsvData[];
       // console.log("dataArray:", dataArray);
 
-      //* V2
+      //* V2 - recommended!
       const dataArray = [] as CsvData[];
       await data.forEachAsync((elem) => {
         return dataArray.push(elem as unknown as CsvData);
