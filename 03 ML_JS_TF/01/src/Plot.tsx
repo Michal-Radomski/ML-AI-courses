@@ -41,6 +41,10 @@ const Plot = (): JSX.Element => {
       const dataArray = (await data.toArray()) as unknown as CsvData[];
       // console.log("dataArray:", dataArray);
 
+      if (dataArray.length % 2 !== 0) {
+        dataArray.pop();
+      }
+
       //* Shuffle data
       tf.util.shuffle(dataArray);
 
@@ -85,10 +89,10 @@ const Plot = (): JSX.Element => {
       // normalizedFeature?.tensor.print();
       // normalizedLabel?.tensor.print();
 
-      tf.split(normalizedFeature.tensor, 2);
-      tf.split(normalizedLabel.tensor, 2);
+      const [trainingFeatureTensor, testingFeatureTensor] = tf.split(normalizedFeature.tensor, 2);
+      const [trainingLabelTensor, testingLabelTensor] = tf.split(normalizedLabel.tensor, 2);
 
-      //* Denormalize test
+      //* Denormalize test only!
       // const denormalizeTest: tf.Tensor<tf.Rank> = denormalize(
       //   normalizedFeature.tensor,
       //   normalizedFeature.min,
