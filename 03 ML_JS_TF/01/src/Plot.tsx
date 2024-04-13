@@ -39,6 +39,17 @@ const Plot = (): JSX.Element => {
           yLabel: "Price",
         }
       );
+
+      // Extract Features (inputs)
+      const featureValues = csvData.map((elem) => elem.x) as number[];
+      const featureTensor = tf.tensor2d(featureValues, [featureValues.length, 1]) as tf.Tensor2D;
+
+      // Extract Labels (outputs)
+      const labelValues = csvData.map((elem) => elem.y) as number[];
+      const labelTensor = tf.tensor2d(labelValues, [labelValues.length, 1]) as tf.Tensor2D;
+
+      featureTensor.print();
+      labelTensor.print();
     }
   }, [csvData]);
 
