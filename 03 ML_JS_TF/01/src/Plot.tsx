@@ -1,8 +1,11 @@
 import React from "react";
 import * as tf from "@tensorflow/tfjs";
+import * as tfvis from "@tensorflow/tfjs-vis";
 
 const Plot = (): JSX.Element => {
   const [csvData, setCsvData] = React.useState<CsvLocal[]>([]);
+
+  const chartRef = React.useRef(null);
 
   React.useEffect(() => {
     (async function takeCsvData() {
@@ -25,12 +28,26 @@ const Plot = (): JSX.Element => {
   }, []);
 
   React.useEffect(() => {
-    if (csvData && csvData.length) {
-      console.log("csvData:", csvData);
+    if (!chartRef) return;
+    if (chartRef?.current && csvData && csvData.length) {
+      const featureName = "Square feet";
+      tfvis.render.scatterplot(
+        { name: `${featureName} vs House Price` },
+        { values: [csvData], series: ["original"] },
+        {
+          xLabel: featureName,
+          yLabel: "Price",
+        }
+      );
     }
   }, [csvData]);
 
-  return <React.Fragment>{csvData?.length}</React.Fragment>;
+  return (
+    <>
+      {csvData?.length}
+      <div ref={chartRef}></div>
+    </>
+  );
 };
 
 export default Plot;

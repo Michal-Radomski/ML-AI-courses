@@ -1,4 +1,3 @@
-import React from "react";
 import * as tf from "@tensorflow/tfjs";
 
 import "./App.scss";
@@ -31,10 +30,10 @@ const App = (): JSX.Element => {
   // console.log("tf.getBackend():", tf.getBackend());
 
   return (
-    <React.Fragment>
+    <>
       <h1 className="text-center py-3">Hello Tensorflow</h1>
       <Plot />
-    </React.Fragment>
+    </>
   );
 };
 
