@@ -33,12 +33,25 @@ const Plot = (): JSX.Element => {
 
   //* Import data from data.csv and set local state
   React.useEffect(() => {
+    // tf.ready().then(() => {
+    //   console.log("tf.backend():", tf.backend());
+    // });
+
     (async function takeCsvData() {
       const csvUrl = "/data.csv";
       const csvData = await tf.data.csv(csvUrl, {});
       // console.log("csvData:", csvData);
       const data = await csvData.take(-1);
-      const dataArray = (await data.toArray()) as unknown as CsvData[];
+
+      //* V1
+      // const dataArray = (await data.toArray()) as unknown as CsvData[];
+      // console.log("dataArray:", dataArray);
+
+      //* V2
+      const dataArray = [] as CsvData[];
+      await data.forEachAsync((elem) => {
+        return dataArray.push(elem as unknown as CsvData);
+      });
       // console.log("dataArray:", dataArray);
 
       if (dataArray.length % 2 !== 0) {
