@@ -82,8 +82,11 @@ const Plot = (): JSX.Element => {
       // Normalize features and labels
       const normalizedFeature = normalize(featureTensor);
       const normalizedLabel = normalize(labelTensor);
-      normalizedFeature?.tensor.print();
-      normalizedLabel?.tensor.print();
+      // normalizedFeature?.tensor.print();
+      // normalizedLabel?.tensor.print();
+
+      tf.split(normalizedFeature.tensor, 2);
+      tf.split(normalizedLabel.tensor, 2);
 
       //* Denormalize test
       // const denormalizeTest: tf.Tensor<tf.Rank> = denormalize(
