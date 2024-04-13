@@ -7,6 +7,7 @@ const Plot = (): JSX.Element => {
 
   const chartRef = React.useRef(null);
 
+  //* Normalize data
   const normalize = (
     tensor: tf.Tensor2D
   ): {
@@ -24,11 +25,13 @@ const Plot = (): JSX.Element => {
     };
   };
 
-  const denormalize = (tensor: tf.Tensor<tf.Rank>, min: tf.Tensor<tf.Rank>, max: tf.Tensor<tf.Rank>): tf.Tensor<tf.Rank> => {
-    const denormalizedTensor = tensor.mul(max.sub(min)).add(min);
-    return denormalizedTensor;
-  };
+  //* Denormalize Data
+  // const denormalize = (tensor: tf.Tensor<tf.Rank>, min: tf.Tensor<tf.Rank>, max: tf.Tensor<tf.Rank>): tf.Tensor<tf.Rank> => {
+  //   const denormalizedTensor = tensor.mul(max.sub(min)).add(min);
+  //   return denormalizedTensor;
+  // };
 
+  //* Import data from data.csv and set local state
   React.useEffect(() => {
     (async function takeCsvData() {
       const csvUrl = "/data.csv";
@@ -37,6 +40,9 @@ const Plot = (): JSX.Element => {
       const data = await csvData.take(-1);
       const dataArray = (await data.toArray()) as unknown as CsvData[];
       // console.log("dataArray:", dataArray);
+
+      //* Shuffle data
+      tf.util.shuffle(dataArray);
 
       const points: CsvLocal[] = await dataArray.map((elem: CsvData) => {
         return {
@@ -49,6 +55,7 @@ const Plot = (): JSX.Element => {
     })();
   }, []);
 
+  //* Print scatter chart
   React.useEffect(() => {
     if (!chartRef) return;
     if (chartRef?.current && csvData && csvData.length) {
@@ -69,7 +76,6 @@ const Plot = (): JSX.Element => {
       // Extract Labels (outputs)
       const labelValues = csvData.map((elem) => elem.y) as number[];
       const labelTensor = tf.tensor2d(labelValues, [labelValues.length, 1]) as tf.Tensor2D;
-
       // featureTensor.print();
       // labelTensor.print();
 
@@ -79,39 +85,40 @@ const Plot = (): JSX.Element => {
       normalizedFeature?.tensor.print();
       normalizedLabel?.tensor.print();
 
-      // Denormalize test
-      const denormalizeTest: tf.Tensor<tf.Rank> = denormalize(
-        normalizedFeature.tensor,
-        normalizedFeature.min,
-        normalizedFeature.max
-      );
-      denormalizeTest.print();
+      //* Denormalize test
+      // const denormalizeTest: tf.Tensor<tf.Rank> = denormalize(
+      //   normalizedFeature.tensor,
+      //   normalizedFeature.min,
+      //   normalizedFeature.max
+      // );
+      // denormalizeTest.print();
 
-      (async function () {
-        const normalizedDataX = Array.from(normalizedFeature.tensor.dataSync()).flat(1);
-        const normalizedDataY = Array.from(normalizedLabel.tensor.dataSync()).flat(1);
-        // console.log(normalizedDataX.length === normalizedDataY.length);
-        const arrayLength = Math.min(normalizedDataX.length, normalizedDataY.length);
-        // console.log({ arrayLength });
-        const normalizedData = [] as CsvLocal[];
-        for (let i = 0; i < arrayLength; i++) {
-          const obj = {
-            x: normalizedDataX[i],
-            y: normalizedDataY[i],
-          };
-          normalizedData.push(obj);
-        }
+      //* Scatter Plot: denormalized data
+      // (async function () {
+      //   const normalizedDataX = Array.from(normalizedFeature.tensor.dataSync()).flat(1);
+      //   const normalizedDataY = Array.from(normalizedLabel.tensor.dataSync()).flat(1);
+      //   // console.log(normalizedDataX.length === normalizedDataY.length);
+      //   const arrayLength = Math.min(normalizedDataX.length, normalizedDataY.length);
+      //   // console.log({ arrayLength });
+      //   const normalizedData = [] as CsvLocal[];
+      //   for (let i = 0; i < arrayLength; i++) {
+      //     const obj = {
+      //       x: normalizedDataX[i],
+      //       y: normalizedDataY[i],
+      //     };
+      //     normalizedData.push(obj);
+      //   }
 
-        normalizedData.length &&
-          tfvis.render.scatterplot(
-            { name: `${featureName}Normalized vs House Price` },
-            { values: [normalizedData], series: ["normalized"] },
-            {
-              xLabel: featureName + "Normalized",
-              yLabel: "Price",
-            }
-          );
-      })();
+      //   normalizedData.length &&
+      //     tfvis.render.scatterplot(
+      //       { name: `${featureName}Normalized vs House Price` },
+      //       { values: [normalizedData], series: ["normalized"] },
+      //       {
+      //         xLabel: featureName + "Normalized",
+      //         yLabel: "Price",
+      //       }
+      //     );
+      // })();
     }
   }, [csvData]);
 
