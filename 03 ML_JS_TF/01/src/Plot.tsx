@@ -86,6 +86,32 @@ const Plot = (): JSX.Element => {
         normalizedFeature.max
       );
       denormalizeTest.print();
+
+      (async function () {
+        const normalizedDataX = Array.from(normalizedFeature.tensor.dataSync()).flat(1);
+        const normalizedDataY = Array.from(normalizedLabel.tensor.dataSync()).flat(1);
+        // console.log(normalizedDataX.length === normalizedDataY.length);
+        const arrayLength = Math.min(normalizedDataX.length, normalizedDataY.length);
+        // console.log({ arrayLength });
+        const normalizedData = [] as CsvLocal[];
+        for (let i = 0; i < arrayLength; i++) {
+          const obj = {
+            x: normalizedDataX[i],
+            y: normalizedDataY[i],
+          };
+          normalizedData.push(obj);
+        }
+
+        normalizedData.length &&
+          tfvis.render.scatterplot(
+            { name: `${featureName}Normalized vs House Price` },
+            { values: [normalizedData], series: ["normalized"] },
+            {
+              xLabel: featureName + "Normalized",
+              yLabel: "Price",
+            }
+          );
+      })();
     }
   }, [csvData]);
 
