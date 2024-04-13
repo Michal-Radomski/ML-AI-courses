@@ -161,6 +161,11 @@ const Plot = (): JSX.Element => {
       //       }
       //     );
       // })();
+
+      //* Model
+      const model = createModel();
+      console.log("model:", model);
+      tfvis.show.modelSummary({ name: "Model summary" }, model);
     }
   }, [csvData]);
 
