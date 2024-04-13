@@ -7,7 +7,13 @@ const Plot = (): JSX.Element => {
 
   const chartRef = React.useRef(null);
 
-  const normalize = (tensor: tf.Tensor2D) => {
+  const normalize = (
+    tensor: tf.Tensor2D
+  ): {
+    tensor: tf.Tensor<tf.Rank>;
+    min: tf.Tensor<tf.Rank>;
+    max: tf.Tensor<tf.Rank>;
+  } => {
     const min = tensor.min();
     const max = tensor.max();
     const normalizedTensor = tensor.sub(min).div(max.sub(min));
@@ -16,6 +22,11 @@ const Plot = (): JSX.Element => {
       min,
       max,
     };
+  };
+
+  const denormalize = (tensor: tf.Tensor<tf.Rank>, min: tf.Tensor<tf.Rank>, max: tf.Tensor<tf.Rank>): tf.Tensor<tf.Rank> => {
+    const denormalizedTensor = tensor.mul(max.sub(min)).add(min);
+    return denormalizedTensor;
   };
 
   React.useEffect(() => {
@@ -67,6 +78,14 @@ const Plot = (): JSX.Element => {
       const normalizedLabel = normalize(labelTensor);
       normalizedFeature?.tensor.print();
       normalizedLabel?.tensor.print();
+
+      // Denormalize test
+      const denormalizeTest: tf.Tensor<tf.Rank> = denormalize(
+        normalizedFeature.tensor,
+        normalizedFeature.min,
+        normalizedFeature.max
+      );
+      denormalizeTest.print();
     }
   }, [csvData]);
 
