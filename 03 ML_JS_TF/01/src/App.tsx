@@ -2,6 +2,7 @@ import React from "react";
 import * as tf from "@tensorflow/tfjs";
 
 import "./App.scss";
+import Plot from "./Plot";
 
 interface CustomTensor extends tf.Tensor<tf.Rank> {
   print: () => void;
@@ -32,6 +33,7 @@ const App = (): JSX.Element => {
   return (
     <React.Fragment>
       <h1 className="text-center py-3">Hello Tensorflow</h1>
+      <Plot />
     </React.Fragment>
   );
 };

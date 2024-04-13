@@ -1,6 +1,7 @@
 {
   "name": "01",
   "version": "0.1.0",
+  "proxy": "http://192.168.1.115:8080",
   "private": true,
   "dependencies": {
     "@tensorflow/tfjs": "^4.17.0",
