@@ -66,14 +66,14 @@ const Plot = (): JSX.Element => {
       const data = await csvData.take(-1);
 
       //* V1
-      // const dataArray = (await data.toArray()) as unknown as CsvData[];
+      const dataArray = (await data.toArray()) as unknown as CsvData[];
       // console.log("dataArray:", dataArray);
 
       //* V2 - recommended!
-      const dataArray = [] as CsvData[];
-      await data.forEachAsync((elem) => {
-        return dataArray.push(elem as unknown as CsvData);
-      });
+      // const dataArray = [] as CsvData[];
+      // await data.forEachAsync((elem) => {
+      //   return dataArray.push(elem as unknown as CsvData);
+      // });
       // console.log("dataArray:", dataArray);
 
       if (dataArray.length % 2 !== 0) {
@@ -164,8 +164,11 @@ const Plot = (): JSX.Element => {
 
       //* Model
       const model = createModel();
-      console.log("model:", model);
+      // console.log("model:", model);
       tfvis.show.modelSummary({ name: "Model summary" }, model);
+
+      const layer = model.getLayer(undefined as any, 0);
+      tfvis.show.layer({ name: "Layer 1" }, layer);
     }
   }, [csvData]);
 
