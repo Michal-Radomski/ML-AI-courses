@@ -7,6 +7,17 @@ const Plot = (): JSX.Element => {
 
   const chartRef = React.useRef(null);
 
+  const normalize = (tensor: tf.Tensor2D) => {
+    const min = tensor.min();
+    const max = tensor.max();
+    const normalizedTensor = tensor.sub(min).div(max.sub(min));
+    return {
+      tensor: normalizedTensor,
+      min,
+      max,
+    };
+  };
+
   React.useEffect(() => {
     (async function takeCsvData() {
       const csvUrl = "/data.csv";
@@ -48,14 +59,19 @@ const Plot = (): JSX.Element => {
       const labelValues = csvData.map((elem) => elem.y) as number[];
       const labelTensor = tf.tensor2d(labelValues, [labelValues.length, 1]) as tf.Tensor2D;
 
-      featureTensor.print();
-      labelTensor.print();
+      // featureTensor.print();
+      // labelTensor.print();
+
+      // Normalize features and labels
+      const normalizedFeature = normalize(featureTensor);
+      const normalizedLabel = normalize(labelTensor);
+      normalizedFeature?.tensor.print();
+      normalizedLabel?.tensor.print();
     }
   }, [csvData]);
 
   return (
     <>
-      {csvData?.length}
       <div ref={chartRef}></div>
     </>
   );

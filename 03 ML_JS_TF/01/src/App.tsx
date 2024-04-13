@@ -31,7 +31,7 @@ const App = (): JSX.Element => {
 
   return (
     <>
-      <h1 className="text-center py-3">Hello Tensorflow</h1>
+      {/* <h1 className="text-center py-3">Hello Tensorflow</h1> */}
       <Plot />
     </>
   );
