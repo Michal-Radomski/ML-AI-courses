@@ -210,7 +210,7 @@ const Plot = (): JSX.Element => {
         const validationLoss = result.history.val_loss.pop();
         console.log(`Validation set loss: ${validationLoss}`);
 
-        const lossTensor = model.evaluate(testingFeatureTensor, testingLabelTensor);
+        const lossTensor = model.evaluate(testingFeatureTensor, testingLabelTensor) as tf.Scalar;
         // console.log("lossTensor:", lossTensor);
         const loss = await lossTensor.toString();
         console.log(`Testing set loss: ${loss}`);
