@@ -70,6 +70,12 @@ const Plot = (): JSX.Element => {
         // onEpochEnd: (epoch, logs) => console.log(`Epoch ${epoch}: los = ${logs?.loss}`),
         onEpochEnd,
         onBatchEnd,
+        // onEpochBegin: function () {
+        //   tfvis.show.layer({ name: `Layer 1` }, model.getLayer(undefined as any, 0));
+        // },
+        // onBatchBegin(batch, logs) {
+        //   console.log(`Epoch ${batch}: los = ${logs?.loss}`);
+        // },
       },
     });
   };
