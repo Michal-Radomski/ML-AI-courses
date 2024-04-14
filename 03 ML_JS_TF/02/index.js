@@ -70,7 +70,6 @@ function createModel() {
       units: 10,
       useBias: true,
       activation: "sigmoid", //* Non-Linear-Regression
-      inputDim: 1,
     })
   );
   model.add(
@@ -78,7 +77,6 @@ function createModel() {
       units: 1, //* One output node
       useBias: true,
       activation: "sigmoid", //* Non-Linear-Regression
-      inputDim: 1,
     })
   );
 
