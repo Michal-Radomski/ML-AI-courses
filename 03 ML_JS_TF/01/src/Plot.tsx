@@ -84,7 +84,8 @@ const Plot = (): JSX.Element => {
       const csvUrl = "/data.csv";
       const csvData = await tf.data.csv(csvUrl, {});
       // console.log("csvData:", csvData);
-      const data = await csvData.take(-1);
+      // const data = await csvData.take(-1); //* The whose set
+      const data = await csvData.take(1000); //* 1k elems
 
       //* V1
       const dataArray = (await data.toArray()) as unknown as CsvData[];
@@ -198,6 +199,15 @@ const Plot = (): JSX.Element => {
       (async function () {
         const result = await trainModel(model, trainingFeatureTensor, trainingLabelTensor);
         console.log("result:", result);
+        const trainingLoss = result.history.loss.pop();
+        console.log(`Training set loss: ${trainingLoss}`);
+        const validationLoss = result.history.val_loss.pop();
+        console.log(`Validation set loss: ${validationLoss}`);
+
+        const lossTensor = model.evaluate(testingFeatureTensor, testingLabelTensor);
+        // console.log("lossTensor:", lossTensor);
+        const loss = await lossTensor.toString();
+        console.log(`Testing set loss: ${loss}`);
       })();
     }
   }, [csvData]);
