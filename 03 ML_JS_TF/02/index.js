@@ -1,5 +1,5 @@
 async function plot(pointsArray, featureName, predictedPointsArray = null) {
-  const values = [pointsArray.slice(0, 1000)];
+  const values = [pointsArray.slice(0, 5000)]; //* 5000 rows
   const series = ["original"];
   if (Array.isArray(predictedPointsArray)) {
     values.push(predictedPointsArray);
@@ -159,7 +159,7 @@ async function train() {
   await plotPredictionLine();
 
   const result = await trainModel(model, trainingFeatureTensor, trainingLabelTensor);
-  console.log(result);
+  console.log("result:", result);
   const trainingLoss = result.history.loss.pop();
   console.log(`Training set loss: ${trainingLoss}`);
   const validationLoss = result.history.val_loss.pop();
