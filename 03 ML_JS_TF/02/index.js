@@ -1,5 +1,5 @@
 async function plot(pointsArray, featureName, predictedPointsArray = null) {
-  const values = [pointsArray.slice(0, 5000)]; //* 5000 rows
+  const values = [pointsArray.slice(0, 1000)]; //* 1000 rows
   const series = ["original"];
   if (Array.isArray(predictedPointsArray)) {
     values.push(predictedPointsArray);
@@ -55,11 +55,29 @@ let model;
 function createModel() {
   model = tf.sequential();
 
+  //* Three layers model: deep learning!
   model.add(
     tf.layers.dense({
-      units: 1,
+      units: 10,
       useBias: true,
-      activation: "linear",
+      // activation: "linear", //* Linear-Regression
+      activation: "sigmoid", //* Non-Linear-Regression
+      inputDim: 1,
+    })
+  );
+  model.add(
+    tf.layers.dense({
+      units: 10,
+      useBias: true,
+      activation: "sigmoid", //* Non-Linear-Regression
+      inputDim: 1,
+    })
+  );
+  model.add(
+    tf.layers.dense({
+      units: 1, //* One output node
+      useBias: true,
+      activation: "sigmoid", //* Non-Linear-Regression
       inputDim: 1,
     })
   );
@@ -78,7 +96,7 @@ async function trainModel(model, trainingFeatureTensor, trainingLabelTensor) {
 
   return model.fit(trainingFeatureTensor, trainingLabelTensor, {
     batchSize: 32,
-    epochs: 20,
+    epochs: 100,
     validationSplit: 0.2,
     callbacks: {
       onEpochEnd,
@@ -172,7 +190,9 @@ async function train() {
   document.getElementById("predict-button").removeAttribute("disabled");
 }
 
+//* Only in web console!
 async function plotParams(weight, bias) {
+  // console.log({ weight, bias });
   model.getLayer(null, 0).setWeights([
     tf.tensor2d([[weight]]), // Kernel (input multiplier)
     tf.tensor1d([bias]), // Bias
