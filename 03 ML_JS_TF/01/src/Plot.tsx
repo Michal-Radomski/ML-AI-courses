@@ -59,13 +59,17 @@ const Plot = (): JSX.Element => {
     model: tf.Sequential,
     trainingFeatureTensor: tf.Tensor<tf.Rank>,
     trainingLabelTensor: tf.Tensor<tf.Rank>
-  ) => {
+  ): Promise<tf.History> => {
+    const { onBatchEnd, onEpochEnd } = tfvis.show.fitCallbacks({ name: "Training Performance" }, ["loss"]) as any;
+
     return model.fit(trainingFeatureTensor, trainingLabelTensor, {
       batchSize: 32,
       epochs: 20,
       validationSplit: 0.2,
       callbacks: {
-        onEpochEnd: (epoch, logs) => console.log(`Epoch ${epoch}: los = ${logs?.loss}`),
+        // onEpochEnd: (epoch, logs) => console.log(`Epoch ${epoch}: los = ${logs?.loss}`),
+        onEpochEnd,
+        onBatchEnd,
       },
     });
   };
