@@ -44,7 +44,7 @@ const Plot = (): JSX.Element => {
       })
     );
 
-    const optimizer = tf.train.sgd(0.1);
+    const optimizer = tf.train.sgd(0.1); //* Stochastic Gradient Descent (SGD)
     model.compile({
       loss: "meanSquaredError",
       optimizer,
