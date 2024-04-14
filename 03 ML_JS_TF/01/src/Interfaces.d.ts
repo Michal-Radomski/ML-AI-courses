@@ -1,3 +1,5 @@
+declare module "tfjs-model-view";
+
 interface CsvData {
   bathrooms: 1;
   bedrooms: 3;

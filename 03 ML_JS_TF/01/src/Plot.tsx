@@ -1,9 +1,11 @@
 import React from "react";
 import * as tf from "@tensorflow/tfjs";
 import * as tfvis from "@tensorflow/tfjs-vis";
+// import * as ModelView from "tfjs-model-view";
 
 const Plot = (): JSX.Element => {
   const [csvData, setCsvData] = React.useState<CsvLocal[]>([]);
+  // const [tensorModel, setTensorModel] = React.useState<tf.Sequential>();
 
   const chartRef = React.useRef(null);
 
@@ -164,7 +166,8 @@ const Plot = (): JSX.Element => {
 
       //* Model
 
-      const model = createModel();
+      const model: tf.Sequential = createModel();
+      // setTensorModel(model);
       // console.log("model:", model);
       // model.summary();
 
@@ -174,6 +177,59 @@ const Plot = (): JSX.Element => {
       tfvis.show.layer({ name: "Layer 1" }, layer);
     }
   }, [csvData]);
+
+  //* Model Visualization - doesn't work!
+  // React.useEffect(() => {
+  //   if (!tensorModel) return;
+  //   if (tensorModel) {
+  //     // console.log("tensorModel:", tensorModel);
+  //     const modelView = new ModelView(tensorModel, {
+  //       printStats: true,
+  //       radius: 25,
+  //       renderLinks: true,
+  //       xOffset: 100,
+  //       renderNode(ctx: CanvasRenderingContext2D, node: { x: number; y: number; value: number }) {
+  //         const { x, y, value } = node;
+  //         ctx.font = "10px Arial";
+  //         ctx.fillStyle = "#000";
+  //         ctx.textAlign = "center";
+  //         ctx.textBaseline = "middle";
+  //         ctx.fillText(String(Math.round(value * 100) / 100), x, y);
+  //       },
+  //       onBeginRender: (renderer: { width?: any; renderContext?: any }) => {
+  //         const { renderContext } = renderer;
+  //         renderContext.fillStyle = "#000";
+  //         renderContext.textAlign = "end";
+  //         renderContext.font = "12px Arial";
+  //         renderContext.fillText("Sepal Length (cm)", 110, 110);
+  //         renderContext.fillText("Sepal Width (cm)", 110, 136);
+  //         renderContext.fillText("Petal Length (cm)", 110, 163);
+  //         renderContext.fillText("Petal Width (cm)", 110, 190);
+
+  //         renderContext.textAlign = "start";
+  //         renderContext.fillText("Setosa", renderer.width - 60, 95);
+  //         renderContext.fillText("Versicolor", renderer.width - 60, 150);
+  //         renderContext.fillText("Virginica", renderer.width - 60, 205);
+  //       },
+  //       layer: {
+  //         dense_Dense1_input: {
+  //           domain: [0, 8],
+  //           color: [165, 130, 180],
+  //         },
+  //         "dense_Dense1/dense_Dense1": {
+  //           color: [125, 125, 125],
+  //         },
+  //         "dense_Dense2/dense_Dense2": {
+  //           color: [125, 125, 125],
+  //         },
+  //         "dense_Dense3/dense_Dense3": {
+  //           nodePadding: 30,
+  //         },
+  //       },
+  //     });
+  //     console.log("modelView:", modelView, typeof modelView);
+  //   }
+  // }, [tensorModel]);
 
   return (
     <>
