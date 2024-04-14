@@ -55,6 +55,21 @@ const Plot = (): JSX.Element => {
     return model;
   };
 
+  const trainModel = async (
+    model: tf.Sequential,
+    trainingFeatureTensor: tf.Tensor<tf.Rank>,
+    trainingLabelTensor: tf.Tensor<tf.Rank>
+  ) => {
+    return model.fit(trainingFeatureTensor, trainingLabelTensor, {
+      batchSize: 32,
+      epochs: 20,
+      validationSplit: 0.2,
+      callbacks: {
+        onEpochEnd: (epoch, logs) => console.log(`Epoch ${epoch}: los = ${logs?.loss}`),
+      },
+    });
+  };
+
   //* Import data from data.csv and set local state
   React.useEffect(() => {
     // tf.ready().then(() => {
@@ -175,6 +190,11 @@ const Plot = (): JSX.Element => {
 
       const layer = model.getLayer(undefined as any, 0);
       tfvis.show.layer({ name: "Layer 1" }, layer);
+
+      (async function () {
+        const result = await trainModel(model, trainingFeatureTensor, trainingLabelTensor);
+        console.log("result:", result);
+      })();
     }
   }, [csvData]);
 
