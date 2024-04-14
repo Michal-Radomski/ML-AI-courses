@@ -163,8 +163,11 @@ const Plot = (): JSX.Element => {
       // })();
 
       //* Model
+
       const model = createModel();
       // console.log("model:", model);
+      // model.summary();
+
       tfvis.show.modelSummary({ name: "Model summary" }, model);
 
       const layer = model.getLayer(undefined as any, 0);
