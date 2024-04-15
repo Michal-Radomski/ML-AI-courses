@@ -208,7 +208,7 @@ function createModel() {
 
   const optimizer = tf.train.adam();
   model.compile({
-    loss: "binaryCrossentropy",
+    loss: "binaryCrossentropy", //* For Binary Classification
     optimizer,
   });
 
