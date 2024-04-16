@@ -6,7 +6,7 @@
     <meta name="keywords" content="TensorFlow.js" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>TensorFlow.js Binary Classification</title>
+    <title>TensorFlow.js Multi-Class Classification</title>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-vis"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
@@ -23,7 +23,7 @@
     <!--   Header   -->
     <div class="section no-pad-bot" id="index-banner">
       <div class="container">
-        <h5 class="header center green-text small">Binary classification with TensorFlow.js</h5>
+        <h5 class="header center red-text small">Multi-class classification with TensorFlow.js</h5>
         <div class="row center">
           <h6 class="header col s12 light">Train a model to predict a class.</h6>
         </div>
@@ -31,10 +31,10 @@
     </div>
 
     <!--   Misc buttons   -->
-    <div class="section no-pad-bot light-green lighten-4">
+    <div class="section no-pad-bot red lighten-4">
       <div class="container">
         <div class="row center">
-          <button id="toggle-button" class="waves-effect waves-light light-green btn-small" onclick="toggleVisor()">
+          <button id="toggle-button" class="waves-effect waves-light red btn-small" onclick="toggleVisor()">
             Toggle Visor
           </button>
           <br /><br />
@@ -49,7 +49,7 @@
           <!--   Training   -->
           <div class="col s12 m6">
             <div class="icon-block">
-              <h3 class="center light-green-text"><i class="material-icons" style="font-size: 2em">build</i></h3>
+              <h3 class="center red-text"><i class="material-icons" style="font-size: 2em">build</i></h3>
               <h5 class="center">Train & Test</h5>
 
               <p class="light"></p>
@@ -64,7 +64,7 @@
                 <button
                   autocomplete="off"
                   id="train-button"
-                  class="waves-effect light-green waves-light btn"
+                  class="waves-effect red waves-light btn"
                   disabled
                   onclick="train()"
                 >
@@ -73,7 +73,7 @@
                 <button
                   autocomplete="off"
                   id="test-button"
-                  class="waves-effect light-green waves-light btn"
+                  class="waves-effect red waves-light btn"
                   disabled
                   onclick="test()"
                 >
@@ -86,7 +86,7 @@
                 <button
                   autocomplete="off"
                   id="load-button"
-                  class="waves-effect light-green waves-light btn-small"
+                  class="waves-effect red waves-light btn-small"
                   disabled
                   onclick="load()"
                 >
@@ -95,7 +95,7 @@
                 <button
                   autocomplete="off"
                   id="save-button"
-                  class="waves-effect light-green waves-light btn-small"
+                  class="waves-effect red waves-light btn-small"
                   disabled
                   onclick="save()"
                 >
@@ -108,7 +108,7 @@
           <!--   Prediction   -->
           <div class="col s12 m6">
             <div class="icon-block">
-              <h3 class="center light-green-text"><i class="material-icons" style="font-size: 2em">timeline</i></h3>
+              <h3 class="center red-text"><i class="material-icons" style="font-size: 2em">timeline</i></h3>
               <h5 class="center">Predict</h5>
 
               <label>Square feet of living space: <input type="number" id="prediction-input-1" placeholder="2000" /></label>
@@ -116,7 +116,7 @@
               <button
                 autocomplete="off"
                 id="predict-button"
-                class="waves-effect light-green waves-light btn"
+                class="waves-effect red waves-light btn"
                 disabled
                 onclick="predict()"
               >

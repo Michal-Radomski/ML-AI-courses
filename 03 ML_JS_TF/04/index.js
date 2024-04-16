@@ -1,4 +1,4 @@
-async function plotClasses(pointsArray, classKey, size = 400, equalizeClassSizes = false) {
+async function plotClasses(pointsArray, classKey, size = 400, equalizeClassSizes = true) {
   const allSeries = {};
   // Add each class as a series
   pointsArray.forEach((p) => {
@@ -28,9 +28,7 @@ async function plotClasses(pointsArray, classKey, size = 400, equalizeClassSizes
       }
     });
   }
-  //     let csv = "";
-  //     Object.values(allSeries).forEach(s => s.forEach(v => csv += `${v.x}, ${v.y}, ${v.class}\n`));
-  // console.log(csv);
+
   tfvis.render.scatterplot(
     {
       name: `Square feet vs House Price`,
@@ -45,25 +43,6 @@ async function plotClasses(pointsArray, classKey, size = 400, equalizeClassSizes
       yLabel: "Price",
       height: size,
       width: size * 1.5,
-    }
-  );
-}
-
-async function plot(pointsArray, featureName, predictedPointsArray = null) {
-  const values = [pointsArray.slice(0, 1000)];
-  const series = ["original"];
-  if (Array.isArray(predictedPointsArray)) {
-    values.push(predictedPointsArray);
-    series.push("predicted");
-  }
-
-  tfvis.render.scatterplot(
-    { name: `${featureName} vs House Price` },
-    { values, series },
-    {
-      xLabel: featureName,
-      yLabel: "Price",
-      height: 300,
     }
   );
 }
@@ -99,28 +78,31 @@ async function plotPredictionHeatmap(name = "Predicted class", size = 400) {
   const yTicks = await yTicksPromise;
   const xTickLabels = xTicks.map((v) => (v / 1000).toFixed(1) + "k sqft");
   const yTickLabels = yTicks.map((v) => "$" + (v / 1000).toFixed(0) + "k");
-  const data = {
-    values,
-    xTickLabels,
-    yTickLabels,
-  };
 
-  tfvis.render.heatmap(
-    {
-      name: `${name} (local)`,
-      tab: "Predictions",
-    },
-    data,
-    { height: size }
-  );
-  tfvis.render.heatmap(
-    {
-      name: `${name} (full domain)`,
-      tab: "Predictions",
-    },
-    data,
-    { height: size, domain: [0, 1] }
-  );
+  tf.unstack(values, 2).forEach((values, i) => {
+    const data = {
+      values,
+      xTickLabels,
+      yTickLabels,
+    };
+
+    tfvis.render.heatmap(
+      {
+        name: `Bedrooms: ${getClassName(i)} (local)`,
+        tab: "Predictions",
+      },
+      data,
+      { height: size }
+    );
+    tfvis.render.heatmap(
+      {
+        name: `Bedrooms: ${getClassName(i)} (full domain)`,
+        tab: "Predictions",
+      },
+      data,
+      { height: size, domain: [0, 1] }
+    );
+  });
 }
 
 function normalise(tensor, previousMin = null, previousMax = null) {
@@ -200,15 +182,15 @@ function createModel() {
   );
   model.add(
     tf.layers.dense({
-      units: 1,
+      units: 3,
       useBias: true,
-      activation: "sigmoid",
+      activation: "softmax",
     })
   );
 
   const optimizer = tf.train.adam();
   model.compile({
-    loss: "binaryCrossentropy", //* For Binary Classification
+    loss: "categoricalCrossentropy",
     optimizer,
   });
 
@@ -220,7 +202,7 @@ async function trainModel(model, trainingFeatureTensor, trainingLabelTensor) {
 
   return model.fit(trainingFeatureTensor, trainingLabelTensor, {
     batchSize: 32,
-    epochs: 2000,
+    epochs: 500,
     validationSplit: 0.2,
     callbacks: {
       onEpochEnd,
@@ -248,16 +230,17 @@ async function predict() {
       const normalisedInput = normalise(inputTensor, normalisedFeature.min, normalisedFeature.max);
       const normalisedOutputTensor = model.predict(normalisedInput.tensor);
       const outputTensor = denormalise(normalisedOutputTensor, normalisedLabel.min, normalisedLabel.max);
-      const outputValue = outputTensor.dataSync()[0];
-      const outputValuePercent = (outputValue * 100).toFixed(1);
-      document.getElementById("prediction-output").innerHTML =
-        `The likelihood of being a waterfront property is <br>` +
-        `<span style="font-size: 2em">${outputValuePercent}%</span>`;
+      const outputs = outputTensor.dataSync();
+      let outputString = "";
+      for (let i = 0; i < 3; i++) {
+        outputString += `Likelihood of having ${getClassName(i)} bedrooms is: ${(outputs[i] * 100).toFixed(1)}%<br>`;
+      }
+      document.getElementById("prediction-output").innerHTML = outputString;
     });
   }
 }
 
-const storageID = "kc-house-price-binary";
+const storageID = "kc-house-price-multi";
 async function save() {
   const saveResults = await model.save(`localstorage://${storageID}`);
   document.getElementById("model-status").innerHTML = `Trained (saved ${saveResults.modelArtifactsInfo.dateSaved})`;
@@ -331,6 +314,24 @@ async function toggleVisor() {
   tfvis.visor().toggle();
 }
 
+function getClassIndex(className) {
+  if (className === 1 || className === "1") {
+    return 0; // 1 bedroom
+  } else if (className === 2 || className === "2") {
+    return 1; // 2 bedrooms
+  } else {
+    return 2; // 3+ bedrooms
+  }
+}
+
+function getClassName(classIndex) {
+  if (classIndex === 2) {
+    return "3+";
+  } else {
+    return classIndex + 1;
+  }
+}
+
 let points;
 let normalisedFeature, normalisedLabel;
 let trainingFeatureTensor, testingFeatureTensor, trainingLabelTensor, testingLabelTensor;
@@ -345,27 +346,28 @@ let trainingFeatureTensor, testingFeatureTensor, trainingLabelTensor, testingLab
   const houseSalesDataset = tf.data.csv(fetchUrl, {});
 
   // Extract x and y values to plot
-  const pointsDataset = houseSalesDataset.map((record) => ({
-    x: record.sqft_living,
-    y: record.price,
-    class: record.waterfront,
-  }));
+  const pointsDataset = houseSalesDataset
+    .map((record) => ({
+      x: record.sqft_living,
+      y: record.price,
+      class: record.bedrooms > 2 ? "3+" : record.bedrooms,
+    }))
+    .filter((r) => r.class !== 0);
   points = await pointsDataset.toArray();
   if (points.length % 2 !== 0) {
     // If odd number of elements
     points.pop(); // remove one element
   }
-  console.log(points);
   tf.util.shuffle(points);
-  plotClasses(points, "Waterfront");
+  plotClasses(points, "Bedrooms");
 
   // Extract Features (inputs)
   const featureValues = points.map((p) => [p.x, p.y]);
   const featureTensor = tf.tensor2d(featureValues);
 
   // Extract Labels (outputs)
-  const labelValues = points.map((p) => p.class);
-  const labelTensor = tf.tensor2d(labelValues, [labelValues.length, 1]);
+  const labelValues = points.map((p) => getClassIndex(p.class));
+  const labelTensor = tf.tidy(() => tf.oneHot(tf.tensor1d(labelValues, "int32"), 3));
 
   // Normalise features and labels
   normalisedFeature = normalise(featureTensor);
