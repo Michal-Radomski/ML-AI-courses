@@ -367,7 +367,7 @@ let trainingFeatureTensor, testingFeatureTensor, trainingLabelTensor, testingLab
 
   // Extract Labels (outputs)
   const labelValues = points.map((p) => getClassIndex(p.class));
-  const labelTensor = tf.tidy(() => tf.oneHot(tf.tensor1d(labelValues, "int32"), 3));
+  const labelTensor = tf.tidy(() => tf.oneHot(tf.tensor1d(labelValues, "int32"), 3)); //* oneHotEncoding
 
   // Normalise features and labels
   normalisedFeature = normalise(featureTensor);
