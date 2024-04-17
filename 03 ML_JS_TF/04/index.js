@@ -344,6 +344,7 @@ let trainingFeatureTensor, testingFeatureTensor, trainingLabelTensor, testingLab
 
   // Import from CSV
   const houseSalesDataset = tf.data.csv(fetchUrl, {});
+  // console.log("houseSalesDataset:", houseSalesDataset);
 
   // Extract x and y values to plot
   const pointsDataset = houseSalesDataset
