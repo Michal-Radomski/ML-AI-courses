@@ -1,0 +1,16 @@
+{
+  "name": "01",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "clear && nodemon simpleAlgorithmCSPRNG.ts"
+  },
+  "keywords": [],
+  "author": "Michal Radomski <michalra@op.pl>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.12.12"
+  },
+  "dependencies": {},
+  "description": ""
+}
